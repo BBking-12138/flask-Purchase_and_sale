@@ -1,23 +1,44 @@
-
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
-    <title>Proudly presented by ECharts</title>
-    {% for jsfile_name in script_list %}
-
-        <script src="{{ host }}/{{ jsfile_name }}.js"></script>
-    {% endfor %}
+    <title>数据统计图表</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/layui/css/layui.css') }}">
+    <script src="{{ url_for('static', filename='lib/layui/layui.js') }}"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <style>
+        .container {
+            padding: 20px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            margin-bottom: 20px;
+        }
+        .card-header {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .card-title {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+        .card-body {
+            padding: 15px;
+        }
+    </style>
 </head>
 
 <body>
-<div id="{{ chart_id }}" style="width:{{ my_width }};height:{{ my_height }}px;"></div>
+    {% block content %}{% endblock %}
+    <div id="{{ chart_id }}" style="width:{{ my_width }};height:{{ my_height }}px;"></div>
     <script type="text/javascript">
         window.onload = function() {
             setTimeout(function() {
-                var myChart_{{ chart_id }} = echarts.init(document.getElementById('{{ chart_id }}'), null, {renderer: '{{ renderer}}'});
-                {{ custom_function }}
+                var myChart_{{ chart_id }} = echarts.init(document.getElementById('{{ chart_id }}'));
                 var option_{{ chart_id }} = {{ options | safe }};
                 myChart_{{ chart_id }}.setOption(option_{{ chart_id }});
                 window.onresize = function() {
@@ -26,7 +47,6 @@
             }, 1000);
         };
     </script>
-
 </body>
 
 </html>

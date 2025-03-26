@@ -6,43 +6,44 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_mail import Mail
+import os
 
-app=Flask(__name__)
-
+app = Flask(__name__)
 
 # 数据库配置
-app.config["SQLALCHEMY_DATABASE_URI"]="mysql+pymysql://uesr:password@127.0.0.1:3306/dbname?charset=utf8"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]=True
-# 密钥配置，在生产环境中使用系统自动生成
-app.config['SECRET_KEY']='d890fbe7e26c4c3eb557b6009e3f4d3d'
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:123456@127.0.0.1:3306/bishe?charset=utf8"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # 关闭SQLAlchemy的修改追踪,提高性能
+app.config["SQLALCHEMY_ECHO"] = False  # 关闭SQL语句打印
 
-# 调试开关，生产环境是关闭的
-app.debug=True
+# 密钥配置
+app.config['SECRET_KEY'] = os.urandom(24)  # 使用系统生成的随机密钥
+
+# 调试开关
+app.debug = True
 
 # 注册数据模型
-db=SQLAlchemy(app)
-
-
+db = SQLAlchemy(app)
 
 # 邮件配置
 app.config['MAIL_SERVER'] = 'smtp.163.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USERNAME'] = ''
-app.config['MAIL_PASSWORD'] = ''
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', '')  # 从环境变量获取
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', '')  # 从环境变量获取
+app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', '')  # 从环境变量获取
 
 mail = Mail(app)
 
 # 注册蓝图
 from app.admin import admin as admin_blueprint
 from app.home import home as home_blueprint
-app.register_blueprint(admin_blueprint,url_prefix='/admin/')
-app.register_blueprint(home_blueprint,url_prefix='/')
+app.register_blueprint(admin_blueprint, url_prefix='/admin/')
+app.register_blueprint(home_blueprint, url_prefix='/')
 
 @app.errorhandler(404)
 def page_not_found(error):
-    return render_template("admin/404.html"),404
+    return render_template("admin/404.html"), 404
 
 
 

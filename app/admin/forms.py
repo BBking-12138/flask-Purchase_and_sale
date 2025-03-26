@@ -5,6 +5,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, SelectField, TextAreaField, FloatField, IntegerField
 from wtforms.validators import DataRequired
+
+from app.apps import app
 from app.models import goods, supplier, User, power, client, duty, section, warehouse
 
 
@@ -368,7 +370,8 @@ class addgoodsname(FlaskForm):
 
 
 # 添加订单
-goodsall = goods.query.all()
+with app.app_context():
+    goodsall = goods.query.all()
 
 class increasePurchaseOrders(FlaskForm):
     goods_name = SelectField(

@@ -145,13 +145,12 @@ def suppliers(page=None):
     if form.data['name'] is None or form.data['name']=='':
         page_data = supplier.query.order_by(
             supplier.supplier_id.desc()
-        ).paginate(page=page, per_page=4)
+        ).paginate(page=page, per_page=10)
         return render_template("admin/supplier.html", form=form, page_data=page_data)
     if form.data['name'].strip():
         page_data = supplier.query.order_by(
             supplier.supplier_id.desc()
-        ).filter(form.data['name']==supplier.supplier_name).paginate(page=page, per_page=4)
-
+        ).filter(supplier.supplier_name==form.data['name']).paginate(page=page, per_page=10)
         return render_template("admin/supplier.html", form=form, page_data=page_data)
 
 # 删除供应商
@@ -198,27 +197,15 @@ def purchaseOrder(page=None):
     form=purchsearch()
     if page is None:
         page = 1
-    if (form.data['goods_name'] is None or form.data['goods_name']=='') and(form.data['person_name'] is None or form.data['person_name'] ==''):
-        page_data = db.session.query(Purchase.purchase_id,Purchase.purchase_num,Purchase.purchase_count,Purchase.purchase_price,
-                                     Purchase.purchase_supplier,Purchase.purchase_user_name,Purchase.purchase_goods,Purchase.purchase_addtime,
-                                     goods.goods_price).order_by(
-            Purchase.purchase_id.desc()
-        ).filter_by(purchase_goods=goods.goods_name).paginate(page=page, per_page=4)
-
-        return render_template("admin/purchaseOrder.html", form=form, page_data=page_data)
-
-    if (form.data['goods_name'].strip()) and (form.data['person_name'] is None or form.data['person_name'] ==''):
+    if form.data['goods_name'] is None or form.data['goods_name']=='':
         page_data = Purchase.query.order_by(
             Purchase.purchase_id.desc()
-        ).filter(form.data['goods_name']==Purchase.purchase_goods).paginate(page=page, per_page=4)
-
+        ).paginate(page=page, per_page=10)
         return render_template("admin/purchaseOrder.html", form=form, page_data=page_data)
-
-    if (form.data['goods_name'] is None or form.data['goods_name'] == '') and (
-            form.data['person_name'].strip()):
+    if form.data['goods_name'].strip():
         page_data = Purchase.query.order_by(
             Purchase.purchase_id.desc()
-        ).filter(form.data['person_name']==Purchase.purchase_user_name).paginate(page=page, per_page=4)
+        ).filter(Purchase.purchase_goods==form.data['goods_name']).paginate(page=page, per_page=10)
         return render_template("admin/purchaseOrder.html", form=form, page_data=page_data)
 
 # 添加订单
@@ -300,27 +287,29 @@ def returngood():
     return "success"
 
 # 采购退货单
-@admin.route("/returnOrder/<int:page>",methods=['GET',"POST"])
+@admin.route("/returnOrder/<int:page>",methods=["GET","POST"])
 @admin_login_req
 def returnOrder(page=None):
-    form = returnordersearch()
+    form=returnordersearch()
     if page is None:
         page = 1
     if (form.data['goods_name'] is None or form.data['goods_name']=='') and(form.data['person_name'] is None or form.data['person_name'] ==''):
         page_data = returngoods.query.order_by(
             returngoods.returngoods_id.desc()
-        ).paginate(page=page, per_page=4)
+        ).paginate(page=page, per_page=10)
         return render_template("admin/returnOrder.html", form=form, page_data=page_data)
+
     if (form.data['goods_name'].strip()) and (form.data['person_name'] is None or form.data['person_name'] ==''):
         page_data = returngoods.query.order_by(
             returngoods.returngoods_id.desc()
-        ).filter(form.data['goods_name']==returngoods.returngoods_goods).paginate(page=page, per_page=4)
+        ).filter(returngoods.returngoods_goods==form.data['goods_name']).paginate(page=page, per_page=10)
         return render_template("admin/returnOrder.html", form=form, page_data=page_data)
+
     if (form.data['goods_name'] is None or form.data['goods_name'] == '') and (
             form.data['person_name'].strip()):
         page_data = returngoods.query.order_by(
             returngoods.returngoods_id.desc()
-        ).filter(form.data['person_name']==returngoods.returngoods_user_name).paginate(page=page, per_page=4)
+        ).filter(returngoods.returngoods_user_name==form.data['person_name']).paginate(page=page, per_page=10)
         return render_template("admin/returnOrder.html", form=form, page_data=page_data)
 
 
@@ -337,12 +326,12 @@ def categoryOfGoods(page=None):
     if form.data['goods_name'] is None or form.data['goods_name'] == '':
         page_data = goods.query.order_by(
             goods.goods_id.desc()
-        ).paginate(page=page, per_page=4)
+        ).paginate(page=page, per_page=10)
         return render_template("admin/categoryOfGoods.html", form=form, page_data=page_data)
     if form.data['goods_name'].strip():
         page_data = goods.query.order_by(
             goods.goods_id.desc()
-        ).filter(form.data['goods_name'] == goods.goods_name).paginate(page=page, per_page=4)
+        ).filter(goods.goods_name==form.data['goods_name']).paginate(page=page, per_page=10)
         return render_template("admin/categoryOfGoods.html", form=form, page_data=page_data)
 
 
@@ -394,40 +383,26 @@ def addTradeName():
 @admin.route("/salesOrder/<int:page>",methods=["GET","POST"])
 @admin_login_req
 def salesOrder(page=None):
-    form = salesorderssearch()
+    form=salesorderssearch()
     if page is None:
         page = 1
-    if (form.data['goods_name'] is None or form.data['goods_name'] == '') and (
-            form.data['person_name'] is None or form.data['person_name'] == ''):
-        page_data = db.session.query(sales.sales_goods_name, sales.sales_num, sales.sales_count,
-                                     sales.sales_price,
-                                     sales.sales_user_name,
-                                     sales.sales_addtime,
-                                     sales.sales_id,
-                                     client.client_name).order_by(
+    if (form.data['goods_name'] is None or form.data['goods_name']=='') and(form.data['person_name'] is None or form.data['person_name'] ==''):
+        page_data = sales.query.order_by(
             sales.sales_id.desc()
-        ).filter_by(sales_client_id=client.client_id).paginate(page=page, per_page=4)
+        ).filter_by(sales_client_id=client.client_id).paginate(page=page, per_page=10)
         return render_template("admin/salesOrder.html", form=form, page_data=page_data)
 
-    if (form.data['goods_name'].strip()) and (form.data['person_name'] is None or form.data['person_name'] == ''):
-        page_data = db.session.query(sales.sales_id, sales.sales_num, sales.sales_count,
-                                     sales.sales_price,
-                                     sales.sales_user_name, sales.sales_goods_name,
-                                     sales.sales_addtime,
-                                     client.client_name).order_by(
+    if (form.data['goods_name'].strip()) and (form.data['person_name'] is None or form.data['person_name'] ==''):
+        page_data = sales.query.order_by(
             sales.sales_id.desc()
-        ).filter_by(form.data['goods_name'] == sales.sales_goods_name,sales_client_id=client.client_id).paginate(page=page, per_page=4)
+        ).filter_by(sales_goods_name==form.data['goods_name'],sales_client_id=client.client_id).paginate(page=page, per_page=10)
         return render_template("admin/salesOrder.html", form=form, page_data=page_data)
 
     if (form.data['goods_name'] is None or form.data['goods_name'] == '') and (
             form.data['person_name'].strip()):
-        page_data = db.session.query(sales.sales_id, sales.sales_num, sales.sales_count,
-                                     sales.sales_price,
-                                     sales.sales_user_name, sales.sales_goods_name,
-                                     sales.sales_addtime,
-                                     client.client_name).order_by(
+        page_data = sales.query.order_by(
             sales.sales_id.desc()
-        ).filter_by(form.data['goods_name'] == sales.sales_user_name,sales_client_id=client.client_id).paginate(page=page, per_page=4)
+        ).filter_by(sales_user_name==form.data['person_name'],sales_client_id=client.client_id).paginate(page=page, per_page=10)
         return render_template("admin/salesOrder.html", form=form, page_data=page_data)
 
 
@@ -581,26 +556,20 @@ def customerz(page=None):
     form=customesserch()
     if page is None:
         page = 1
-
-    if (form.data['name'] is None or form.data['name'] == '') and (
-            form.data['phone'] is None or form.data['phone'] == ''):
+    if form.data['name'] is None or form.data['name']=='':
         page_data = client.query.order_by(
             client.client_id.desc()
-        ).paginate(page=page, per_page=4)
+        ).paginate(page=page, per_page=10)
         return render_template("admin/customerz.html", form=form, page_data=page_data)
-
-    if (form.data['name'].strip()) and (form.data['phone'] is None or form.data['phone'] == ''):
+    if form.data['name'].strip():
         page_data = client.query.order_by(
             client.client_id.desc()
-        ).filter(form.data['name'] == client.client_name).paginate(page=page, per_page=4)
-
+        ).filter(client.client_name==form.data['name']).paginate(page=page, per_page=10)
         return render_template("admin/customerz.html", form=form, page_data=page_data)
-
-    if (form.data['name'] is None or form.data['name'] == '') and (
-            form.data['phone'].strip()):
+    if form.data['phone'].strip():
         page_data = client.query.order_by(
             client.client_id.desc()
-        ).filter(form.data['phone'] == client.client_phone).paginate(page=page, per_page=4)
+        ).filter(client.client_phone==form.data['phone']).paginate(page=page, per_page=10)
         return render_template("admin/customerz.html", form=form, page_data=page_data)
 
 
@@ -728,28 +697,23 @@ def dellwarehouse():
 @admin.route("/enteringWarehouse/<int:page>",methods=["GET","POST"])
 @admin_login_req
 def enteringWarehouse(page=None):
-    form = enteringwarehouseserach()
+    form=enteringwarehouseserach()
     if page is None:
         page = 1
-    if (form.data['name'] is None or form.data['name'] == '') and (
-            form.data['ywy'] is None or form.data['ywy'] == ''):
+    if form.data['name'] is None or form.data['name']=='':
         page_data = inwarehouse.query.order_by(
             inwarehouse.inwarehouse_id.desc()
-        ).paginate(page=page, per_page=4)
+        ).paginate(page=page, per_page=10)
         return render_template("admin/enteringWarehouse.html", form=form, page_data=page_data)
-
-    if (form.data['name'].strip()) and (form.data['ywy'] is None or form.data['ywy'] == ''):
+    if form.data['name'].strip():
         page_data = inwarehouse.query.order_by(
             inwarehouse.inwarehouse_id.desc()
-        ).filter(form.data['name'] == inwarehouse.inwarehouse_goods).paginate(page=page, per_page=4)
-
+        ).filter(inwarehouse.inwarehouse_goods==form.data['name']).paginate(page=page, per_page=10)
         return render_template("admin/enteringWarehouse.html", form=form, page_data=page_data)
-
-    if (form.data['name'] is None or form.data['name'] == '') and (
-            form.data['ywy'].strip()):
+    if form.data['gys'].strip():
         page_data = inwarehouse.query.order_by(
             inwarehouse.inwarehouse_id.desc()
-        ).filter(form.data['gys'] == inwarehouse.inwarehouse_user_name).paginate(page=page, per_page=4)
+        ).filter(inwarehouse.inwarehouse_user_name==form.data['gys']).paginate(page=page, per_page=10)
         return render_template("admin/enteringWarehouse.html", form=form, page_data=page_data)
 
 
@@ -775,43 +739,21 @@ def outWarehousing(page=None):
     form=outWarehousingsearch()
     if page is None:
         page = 1
-    if (form.data['name'] is None or form.data['name'] == '') and (
-            form.data['ywy'] is None or form.data['ywy'] == ''):
-        page_data = db.session.query(stock.stock_num,
-                                     stock.stock_count,
-                                     stock.stock_price,
-                                     stock.stock_user_name,
-                                     stock.stock_goods,
-                                     stock.stock_addtime,
-                                     client.client_name).order_by(
+    if form.data['name'] is None or form.data['name']=='':
+        page_data = stock.query.order_by(
             stock.stock_id.desc()
-        ).filter_by(stock_supplier=client.client_id).paginate(page=page, per_page=4)
+        ).filter_by(stock_supplier=client.client_id).paginate(page=page, per_page=10)
         return render_template("admin/outWarehousing.html", form=form, page_data=page_data)
-
-    if (form.data['name'].strip()) and (form.data['ywy'] is None or form.data['ywy'] == ''):
-        page_data = db.session.query(stock.stock_num,
-                                     stock.stock_count,
-                                     stock.stock_price,
-                                     stock.stock_user_name,
-                                     stock.stock_goods,
-                                     stock.stock_addtime,
-                                     client.client_name).order_by(
+    if form.data['name'].strip():
+        page_data = stock.query.order_by(
             stock.stock_id.desc()
-        ).filter_by(form.data['name'] == stock.stock_goods,stock_supplier=client.client_id).paginate(page=page, per_page=4)
-        return render_template("admin/enteringWarehouse.html", form=form, page_data=page_data)
-
-    if (form.data['name'] is None or form.data['name'] == '') and (
-            form.data['ywy'].strip()):
-        page_data = db.session.query(stock.stock_num,
-                                     stock.stock_count,
-                                     stock.stock_price,
-                                     stock.stock_user_name,
-                                     stock.stock_goods,
-                                     stock.stock_addtime,
-                                     client.client_name).order_by(
+        ).filter_by(stock_goods==form.data['name'],stock_supplier=client.client_id).paginate(page=page, per_page=10)
+        return render_template("admin/outWarehousing.html", form=form, page_data=page_data)
+    if form.data['gys'].strip():
+        page_data = stock.query.order_by(
             stock.stock_id.desc()
-        ).filter_by(form.data['gys'] == stock.stock_user_name,stock_supplier=client.client_id).paginate(page=page, per_page=4)
-        return render_template("admin/enteringWarehouse.html", form=form, page_data=page_data)
+        ).filter_by(stock_user_name==form.data['gys'],stock_supplier=client.client_id).paginate(page=page, per_page=10)
+        return render_template("admin/outWarehousing.html", form=form, page_data=page_data)
 
 
 # 删除出库订单
@@ -839,17 +781,13 @@ def dellckdd():
 @admin.route("/inventoryStatistics/")
 @admin_login_req
 def inventoryStatistics():
-    _bar,javascript_snippet = pies()
+    pie = pies()
     return render_template(
         "admin/inventoryStatistics.html",
-        chart_id=_bar.chart_id,
-        host=url_for('static', filename='assets/js'),
-        renderer=_bar.renderer,
-        my_width="50%",
-        my_height=500,
-        custom_function=javascript_snippet.function_snippet,
-        options=javascript_snippet.option_snippet,
-        script_list=_bar.get_js_dependencies(),
+        chart_id="inventory_chart",
+        my_width="100%",
+        my_height=400,
+        options=pie.dump_options()
     )
 
 
@@ -857,17 +795,13 @@ def inventoryStatistics():
 @admin.route("/purchasingStatistics/")
 @admin_login_req
 def purchasingStatistics():
-    _bar, javascript_snippet = bars()
+    bar = bars()
     return render_template(
         "admin/purchasingStatistics.html",
-        chart_id=_bar.chart_id,
-        host=url_for('static',filename='assets/js'),
-        renderer=_bar.renderer,
-        my_width="50%",
-        my_height=500,
-        custom_function=javascript_snippet.function_snippet,
-        options=javascript_snippet.option_snippet,
-        script_list=_bar.get_js_dependencies(),
+        chart_id="purchase_chart",
+        my_width="100%",
+        my_height=400,
+        options=bar.dump_options()
     )
 
 
@@ -875,17 +809,13 @@ def purchasingStatistics():
 @admin.route("/salesStatistics/")
 @admin_login_req
 def salesStatistics():
-    line, javascript_snippet = lines()
+    line = lines()
     return render_template(
         "admin/salesStatistics.html",
-        chart_id=line.chart_id,
-        host=url_for('static', filename='assets/js'),
-        renderer=line.renderer,
-        my_width="50%",
-        my_height=500,
-        custom_function=javascript_snippet.function_snippet,
-        options=javascript_snippet.option_snippet,
-        script_list=line.get_js_dependencies(),
+        chart_id="sales_chart",
+        my_width="100%",
+        my_height=400,
+        options=line.dump_options()
     )
 
 

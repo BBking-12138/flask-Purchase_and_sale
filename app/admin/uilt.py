@@ -1,19 +1,19 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 # author:Agam
 # datetime:2018-11-05
-
 
 import datetime
 import random
 import string
 from PIL import Image, ImageFont, ImageDraw, ImageFilter
-from pyecharts import Bar, Line, Pie
-from pyecharts_javascripthon.api import TRANSLATOR
+from pyecharts import options as opts
+from pyecharts.charts import Bar, Line, Pie
 from sqlalchemy import extract, func
 from app.apps import db
-from app.models import Purchase, sales,warehouse,goods
+from app.models import Purchase, sales, warehouse, goods
 
 
+# ... [验证码生成函数不变] ...
 def rndColor():
     '''随机颜色'''
     return (random.randint(32, 127), random.randint(32, 127), random.randint(32, 127))
@@ -52,77 +52,76 @@ def get_verify_code():
     im = im.filter(ImageFilter.GaussianBlur(radius=1.5))
     return im, code
 
-
-# 进货表格
-# 进货量
+# 进货图表
 def bars():
-    bar=bar_chart()
-    javascript_snippet = TRANSLATOR.translate(bar.options)
-    return bar,javascript_snippet
+    bar = bar_chart()
+    return bar
+
 
 def bar_chart():
-    d = db.session.query(func.count(extract('Day', Purchase.purchase_addtime)),
-                         extract('Day', Purchase.purchase_addtime)).group_by(
+    d = db.session.query(
+        func.count(extract('Day', Purchase.purchase_addtime)),
         extract('Day', Purchase.purchase_addtime)
-    ).all()
+    ).group_by(extract('Day', Purchase.purchase_addtime)).all()
 
-    attr = ["{}号".format(j) for _,j in d]
-    v1 = [i for i,_ in d]
-    bar = Bar("日采购量")
-    bar.add(
-        "",
-        attr,
-        v1,
-        is_datazoom_show=True,
-        datazoom_type="both",
-        datazoom_range=[10, 25],
+    attr = ["{}号".format(j) for _, j in d]
+    v1 = [i for i, _ in d]
+
+    bar = Bar()
+    bar.add_xaxis(attr)
+    bar.add_yaxis("采购量", v1)
+    bar.set_global_opts(
+        title_opts=opts.TitleOpts(title="日采购量"),
+        datazoom_opts=[
+            opts.DataZoomOpts(type_="slider", range_start=10, range_end=25),
+            opts.DataZoomOpts(type_="inside", range_start=10, range_end=25)
+        ]
     )
     return bar
 
 
-# 销售表格
-# 销售量
-def lines():
-    line = line_chart()
-    javascript_snippet = TRANSLATOR.translate(line.options)
-    return line,javascript_snippet
-def line_chart():
-    sale = db.session.query(func.count(extract('Day', sales.sales_addtime)),
-                         extract('Day', sales.sales_addtime)).group_by(
-        extract('Day', sales.sales_addtime)
-    ).all()
-    attr = [i for _,i in sale]
-    v1 = [j for j,_ in sale]
-    print(attr)
-    print(v1)
-    line = Line("日销售量")
-
-    line.add("", attr, v1, is_stack=True, is_smooth=True,is_fill=True)
-    return line
-
-
+# 库存图表
 def pies():
-    pie = pie_chart()
-    javascript_snippet = TRANSLATOR.translate(pie.options)
-    return pie,javascript_snippet
-def pie_chart():
-    warehouses = db.session.query(func.count(warehouse.warehouse_goods_num),
-                                  goods.goods_name).filter(warehouse.warehouse_goods_name == goods.goods_name).group_by(
-        warehouse.warehouse_supplier_name
-    ).all()
-    print(warehouses)
-    attr = [i for _, i in warehouses]
-    v1 = [j for j, _ in warehouses]
-    print(attr)
-    print(v1)
-    pie = Pie("")
+    d = db.session.query(
+        func.sum(warehouse.warehouse_goods_num).label('total'),
+        goods.goods_name
+    ).join(goods, warehouse.warehouse_goods_name == goods.goods_name)\
+    .group_by(goods.goods_name).all()
 
-    pie.add("", attr, v1, is_stack=True, is_smooth=True, is_fill=True, rosetype="area", is_label_show=True)
+    attr = [j for _, j in d]
+    v1 = [i for i, _ in d]
+
+    pie = Pie()
+    pie.add("", [list(z) for z in zip(attr, v1)])
+    pie.set_global_opts(
+        title_opts=opts.TitleOpts(title="库存统计"),
+        legend_opts=opts.LegendOpts(orient="vertical", pos_top="15%", pos_left="2%")
+    )
+    pie.set_series_opts(label_opts=opts.LabelOpts(formatter="{b}: {c}"))
     return pie
 
+# 销售图表
+def lines():
+    sale = db.session.query(
+        func.count(extract('Day', sales.sales_addtime)).label('count'),
+        extract('Day', sales.sales_addtime).label('day')
+    ).group_by(extract('Day', sales.sales_addtime)).all()
 
+    attr = [i for _, i in sale]
+    v1 = [j for j, _ in sale]
 
-# 生成编号
+    line = Line()
+    line.add_xaxis(attr)
+    line.add_yaxis("销售量", v1)
+    line.set_global_opts(
+        title_opts=opts.TitleOpts(title="日销售量"),
+        datazoom_opts=[
+            opts.DataZoomOpts(type_="slider", range_start=10, range_end=25),
+            opts.DataZoomOpts(type_="inside", range_start=10, range_end=25)
+        ]
+    )
+    return line
+
 def on_created():
     nowTime = datetime.datetime.now().strftime("%Y%m%d%H%M%S");  # 生成当前时间
     randomNum = random.randint(0, 100);  # 生成的随机整数n，其中0<=n<=100
@@ -130,10 +129,3 @@ def on_created():
         randomNum = str(0) + str(randomNum);
     uniqueNum = str(nowTime) + str(randomNum);
     return uniqueNum
-
-
-
-
-
-
-
