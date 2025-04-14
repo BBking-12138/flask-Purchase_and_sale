@@ -15,7 +15,7 @@
       </div>
 <xblock>
 
-  <button class="layui-btn" onclick="x_admin_show('添加订单','{{url_for("admin.increasePurchaseOrder")}}','1150','450')">添加订单</button>
+  <button class="layui-btn" onclick="x_admin_show('招标成功单','{{url_for("admin.increasePurchaseOrder")}}','1150','450')">添加订单</button>
 
 </xblock>
 
@@ -25,16 +25,15 @@
   <table class="layui-table">
         <thead>
           <tr>
-
-              <th>商品id</th>
-            <th>订单编号</th>
-            <th>商品名称</th>
-            <th>数量</th>
-              <th>单价</th>
-            <th>总金额</th>
-            <th>供应商</th>
-            <th>进货人</th>
-            <th>进货时间</th>
+            <th>id</th>
+            <th>项目编号</th>
+            <th>招标名称</th>
+            <th>项目简介</th>
+            <th>备注</th>
+            <th>招标单位</th>
+            <th>投标单位</th>
+            <th>评标员</th>
+            <th>招标时间</th>
             <th >操作</th>
             </tr>
         </thead>
@@ -52,10 +51,10 @@
             <td>{{i.purchase_user_name}}</td>
             <td>{{i.purchase_addtime}}</td>
             <td class="td-manage">
-              <a title="入库"  onclick="ruku(this,'{{i.purchase_id}}')" href="javascript:;">
+              <a title="下载"  onclick="ruku(this,'{{i.purchase_id}}')" href="javascript:;">
                 <i class="layui-icon">&#xe63c;</i>
               </a>
-                <a title="退货"  onclick="returngoods(this,'{{i.purchase_id}}')" href="javascript:;">
+                <a title="修改"  onclick="returngoods(this,'{{i.purchase_id}}')" href="javascript:;">
                 <i class="layui-icon">&#xe63c;</i>
               </a>
               <a title="删除" onclick="member_del(this,'{{i.purchase_id}}')" href="javascript:;">

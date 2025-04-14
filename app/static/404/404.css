@@ -27,7 +27,7 @@ color: white;
 font-family: "proxima nova","Roboto","helvetica",Arial,sans-serif;
 font-size: 24px;
 font-weight: normal;
-.opacity(50);
+opacity: 0.5;
 }
 h1 a,h2 a{color:#505358}
 .fullScreen {

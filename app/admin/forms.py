@@ -219,14 +219,14 @@ class addsuppliers(FlaskForm):
     )
 
 
-# 供应商搜索
+# 招标单位名称搜索
 class suppliersserach(FlaskForm):
     name = StringField(
-        label='供货商名称',
-        description="供应商名称",
+        label='招标单位名称',
+        description="招标单位名称",
         render_kw={
             "type": "text",
-            "placeholder": "供应商名称",
+            "placeholder": "招标单位名称",
             "autocomplete": "off",
             "class": "layui-input"
         }
@@ -240,22 +240,22 @@ class suppliersserach(FlaskForm):
         }
     )
 
-# 采购进货单搜索
+# 招标成功单搜索
 class purchsearch(FlaskForm):
     goods_name = StringField(
-        description="请输入货物名称",
+        description="请输入招标名称",
         render_kw={
             "type": "text",
             "class": "layui-input",
-            "placeholder": "请输入货物名称！",
+            "placeholder": "请输入招标名称！",
             "lay-verify": "required",
         }
     )
     person_name = StringField(
-        description="业务员名称查询",
+        description="评标员名称查询",
         render_kw={
             "type": "text",
-            "placeholder": "业务员名称查询",
+            "placeholder": "评标员名称查询",
             "autocomplete": "off",
             "class": "layui-input"
         }
@@ -270,22 +270,22 @@ class purchsearch(FlaskForm):
     )
 
 
-# 退货单搜索
+# 退标单搜索
 class returnordersearch(FlaskForm):
     goods_name = StringField(
-        description="商品名称查询",
+        description="请输入招标名称！",
         render_kw={
             "type": "text",
-            "placeholder": "商品名称查询",
+            "placeholder": "请输入招标名称！",
             "autocomplete": "off",
             "class": "layui-input"
         }
     )
     person_name = StringField(
-        description="业务员名称查询",
+        description="评标员名称查询",
         render_kw={
             "type": "text",
-            "placeholder": "业务员名称查询",
+            "placeholder": "评标员名称查询",
             "autocomplete": "off",
             "class": "layui-input"
         }
@@ -298,13 +298,13 @@ class returnordersearch(FlaskForm):
             "onclick": "mesg()"
         }
     )
-# 商品信息单搜索
+# 招标信息查询搜索
 class goodssearch(FlaskForm):
     goods_name = StringField(
-        description="商品名称查询",
+        description="招标信息查询",
         render_kw={
             "type": "text",
-            "placeholder": "商品名称查询",
+            "placeholder": "招标信息查询",
             "autocomplete": "off",
             "class": "layui-input"
         }
@@ -321,14 +321,14 @@ class goodssearch(FlaskForm):
 # 添加商品名
 class addgoodsname(FlaskForm):
     name = StringField(
-        label='商品名',
+        label='招标名称',
         validators=[
             DataRequired()
         ],
-        description="商品名",
+        description="招标名称",
         render_kw={
             "type": "text",
-            "placeholder": "商品名",
+            "placeholder": "招标名称",
             "autocomplete": "off",
             "lay-verify": "required",
             "class": "layui-input"
@@ -441,19 +441,19 @@ class increasePurchaseOrders(FlaskForm):
 # 销售订单搜索
 class salesorderssearch(FlaskForm):
     goods_name = StringField(
-        description="商品名称查询",
+        description="招标名称查询",
         render_kw={
             "type": "text",
-            "placeholder": "商品名称查询",
+            "placeholder": "招标名称查询",
             "autocomplete": "off",
             "class": "layui-input"
         }
     )
     person_name = StringField(
-        description="业务员名称查询",
+        description="投标单位查询",
         render_kw={
             "type": "text",
-            "placeholder": "业务员名称查询",
+            "placeholder": "投标单位查询",
             "autocomplete": "off",
             "class": "layui-input"
         }
@@ -542,19 +542,19 @@ class addsaleorder(FlaskForm):
 # 退货订单搜索
 class returnsalessearch(FlaskForm):
     goods_name = StringField(
-        description="商品名称查询",
+        description="招标名称查询",
         render_kw={
             "type": "text",
-            "placeholder": "商品名称查询",
+            "placeholder": "招标名称查询",
             "autocomplete": "off",
             "class": "layui-input"
         }
     )
     person_name = StringField(
-        description="业务员名称查询",
+        description="投标单位查询",
         render_kw={
             "type": "text",
-            "placeholder": "业务员名称查询",
+            "placeholder": "投标单位查询",
             "autocomplete": "off",
             "class": "layui-input"
         }
@@ -643,10 +643,10 @@ class addreturnorder(FlaskForm):
 # 客户管理查询
 class customesserch(FlaskForm):
     name = StringField(
-        description="客户名查询",
+        description="投标商姓名查询",
         render_kw={
             "type": "text",
-            "placeholder": "客户名查询",
+            "placeholder": "投标商姓名查询",
             "autocomplete": "off",
             "class": "layui-input"
         }
@@ -733,19 +733,19 @@ class addcustomes(FlaskForm):
 # 库存查询
 class warehouseserch(FlaskForm):
     name = StringField(
-        description="商品名查询",
+        description="招标名称查询",
         render_kw={
             "type": "text",
-            "placeholder": "商品名查询",
+            "placeholder": "招标名称查询",
             "autocomplete": "off",
             "class": "layui-input"
         }
     )
     gys = StringField(
-        description="供应商查询",
+        description="评标员查询",
         render_kw={
             "type": "text",
-            "placeholder": "供应商查询",
+            "placeholder": "评标员查询",
             "autocomplete": "off",
             "class": "layui-input"
         }
@@ -763,19 +763,19 @@ class warehouseserch(FlaskForm):
 # 入库搜索
 class enteringwarehouseserach(FlaskForm):
     name = StringField(
-        description="商品名查询",
+        description="招标名称查询",
         render_kw={
             "type": "text",
-            "placeholder": "商品名查询",
+            "placeholder": "招标名称查询",
             "autocomplete": "off",
             "class": "layui-input"
         }
     )
     ywy = StringField(
-        description="业务员查询",
+        description="评标员查询",
         render_kw={
             "type": "text",
-            "placeholder": "业务员查询",
+            "placeholder": "评标员查询",
             "autocomplete": "off",
             "class": "layui-input"
         }
@@ -793,19 +793,19 @@ class enteringwarehouseserach(FlaskForm):
 # 出库搜索
 class outWarehousingsearch(FlaskForm):
     name = StringField(
-        description="商品名查询",
+        description="招标名称查询",
         render_kw={
             "type": "text",
-            "placeholder": "商品名查询",
+            "placeholder": "招标名称查询",
             "autocomplete": "off",
             "class": "layui-input"
         }
     )
     ywy = StringField(
-        description="业务员查询",
+        description="评标员查询",
         render_kw={
             "type": "text",
-            "placeholder": "业务员查询",
+            "placeholder": "评标员查询",
             "autocomplete": "off",
             "class": "layui-input"
         }
