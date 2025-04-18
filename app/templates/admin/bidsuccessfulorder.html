@@ -1,0 +1,143 @@
+{% extends "admin/bases.html" %}
+{% import "admin/fy.html" as pg %}
+{% block content %}
+
+
+<div class="x-body">
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so" method="post">
+            {{form.tender_unit}}
+            <!--            {{form.person_name}}-->
+            {{ form.csrf_token }}
+            {{form.submit}}
+        </form>
+    </div>
+<xblock>
+
+  <button class="layui-btn" onclick="x_admin_show('招标成功单','{{url_for("admin.increasebidsuccessfulorder")}}','1150','450')">添加招标项目</button>
+  <button class="layui-btn" onclick="x_admin_show('招标成功单','{{url_for("admin.tenderrevise")}}','1150','450')">修改招标项目</button>
+
+</xblock>
+
+    <!-- 下方详细表格内容 -->
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>项目编号</th>
+            <th>招标名称</th>
+            <th>项目简介</th>
+            <th>备注</th>
+            <th>招标单位</th>
+            <th>投标单位</th>
+            <th>项目整体状态</th>
+            <th>更新时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in page_data.items %}
+        <tr>
+
+            <td>{{i.id}}</td>
+            <td>{{i.project_number}}</td>
+            <td>{{i.project_name}}</td>
+            <td>{{i.project_introduction}}</td>
+            <td>{{i.notes}}</td>
+            <td>{{i.tender_unit}}</td>
+            <td>{{i.bid_unit}}</td>
+            <td>{{i.status_id}}</td>
+            <td>{{i.update_time}}</td>
+            <td class="td-manage">
+<!--                <a title="入库" onclick="ruku(this,'{{i.id}}')" href="javascript:">-->
+<!--                    <i class="layui-icon">&#xe63c;</i>-->
+<!--                </a>-->
+<!--                <a title="修改" onclick="revise(this,'{{i.id}}')" href="javascript:">-->
+<!--                    <i class="layui-icon">&#xe642;;</i>-->
+<!--                </a>-->
+                <a title="删除" onclick="member_del(this,'{{i.id}}')" href="javascript:">
+                    <i class="layui-icon">&#xe640;</i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    {{pg.page(page_data,'admin.bidsuccessfulorder')}}
+
+</div>
+
+
+<script>
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#start' //指定元素
+        });
+
+    });
+    // //  用户-入库
+    //  function ruku(obj, id) {
+    //      console.log(id)
+    //      layer.confirm('确认要入库吗？', function (index) {
+    //          //发异步数据
+    //          $.get(
+    //              'http://wesm.com/admin/inwarehouses?id=' + id,
+    //              function (html) {
+    //                  location.reload();
+    //              }
+    //          );
+    //          layer.msg('已入库!', {icon: 1, time: 1000});
+    //      });
+    //  }
+    //
+     /*用户-修改*/
+     // function revise(obj,id) {
+     //      console.log(id)
+     //    layer.confirm('确认要修改吗？',function(index){
+     //        //发异步删除数据
+     //              $.get(
+     //
+     //              'http://127.0.0.1:5050/admin/revise?id='+id,
+     //              function(html){
+     //                  location.reload();
+     //
+     //              }
+     //              );
+     //        layer.msg('已修改!',{icon:1,time:1000});
+     //    });
+     // }
+
+    /*用户-删除*/
+    function member_del(obj, id) {
+        console.log(id)
+        layer.confirm('确认要删除吗？', function (index) {
+            //发异步删除数据
+            $.get(
+                'http://127.0.0.1:5050/admin/dell?id=' + id,
+                function (html) {
+                    location.reload();
+                }
+            );
+            $(obj).parents("tr").remove();
+            layer.msg('已删除!', {icon: 1, time: 1000});
+        });
+    }
+    // function delAll(argument) {
+    //
+    //     var data = tableCheck.getData();
+    //
+    //     layer.confirm('确认要删除吗？' + data, function (index) {
+    //         //捉到所有被选中的，发异步进行删除
+    //         console.log(index)
+    //         layer.msg('删除成功', {icon: 1});
+    //         $(".layui-form-checked").not('.header').parents('tr').remove();
+    //     });
+    // }
+
+</script>
+{% endblock %}

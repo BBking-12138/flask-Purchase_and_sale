@@ -3,34 +3,31 @@
 
 {% block content %}
 
-    <!-- 顶部开始 -->
-    <div class="container">
-        <div class="logo"><a href="{{url_for('admin.index')}}">智能招投标系统</a></div>
-        <div class="left_open">
-            <i title="展开左侧栏" class="iconfont">&#xe699;</i>
-        </div>
+<!-- 顶部开始 -->
+<div class="container">
+    <div class="logo"><a href="{{url_for('admin.index')}}">智能招投标系统</a></div>
+    <div class="left_open">
+        <i title="展开左侧栏" class="iconfont">&#xe699;</i>
+    </div>
 
-        <ul class="layui-nav right" lay-filter="">
-          <li class="layui-nav-item">
+    <ul class="layui-nav right" lay-filter="">
+        <li class="layui-nav-item">
             <a href="javascript:;">{{name}}</a>
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
 
-              <dd><a href="{{url_for('admin.logout')}}">退出</a></dd>
+                <dd><a href="{{url_for('admin.logout')}}">退出</a></dd>
             </dl>
-          </li>
-          <li class="layui-nav-item to-index"><a href="{{url_for('home.index')}}">前台首页</a></li>
-        </ul>
+        </li>
+        <li class="layui-nav-item to-index"><a href="{{url_for('home.index')}}">前台首页</a></li>
+    </ul>
 
-    </div>
-    <!-- 顶部结束 -->
-    <!-- 中部开始 -->
-     <!-- 左侧菜单开始 -->
-    <div class="left-nav">
-      <div id="side-nav">
+</div>
+<!-- 顶部结束 -->
+<!-- 中部开始 -->
+<!-- 左侧菜单开始 -->
+<div class="left-nav">
+    <div id="side-nav">
         <ul id="nav">
-
-
-
             <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe723;</i>
@@ -44,208 +41,44 @@
                             <cite>个人信息管理</cite>
 
                         </a>
-                    </li >
+                    </li>
                 </ul>
             </li>
-             <li>
-                    <a href="javascript:;">
-                        <i class="iconfont">&#xe6b8;</i>
-                        <cite>招标管理</cite>
-                        <i class="iconfont nav_right">&#xe697;</i>
-                    </a>
-                    <ul class="sub-menu">
-                        <li>
-                            <a _href="{{url_for('admin.purchaseOrder',page=1)}}">
-                                <i class="iconfont">&#xe6a7;</i>
-                                <cite>招标成功单管理</cite>
-
-                            </a>
-                        </li >
-
-                             <li>
-                            <a _href="{{url_for('admin.returnOrder',page=1)}}">
-                                <i class="iconfont">&#xe6a7;</i>
-                                <cite>招标退标单管理</cite>
-
-                            </a>
-                        </li >
-                        <li>
-                            <a _href="{{url_for('admin.categoryOfGoods',page=1)}}">
-                                <i class="iconfont">&#xe6a7;</i>
-                                <cite>招标信息（标段）管理</cite>
-
-                            </a>
-                        </li >
-                        <li>
-                            <a _href="{{url_for('admin.suppliers',page=1)}}">
-                                <i class="iconfont">&#xe6a7;</i>
-                                <cite>招标单位管理</cite>
-
-                            </a>
-                        </li>
-                    </ul>
-             </li>
-
-
             <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe723;</i>
-                    <cite>投标管理</cite>
+                <a _href="javascript:;">
+                    <i class="iconfont">&#xe6b8;</i>
+                    <cite>招标管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="{{url_for('admin.salesOrder',page=1)}}">
+                        <a _href="{{url_for('admin.bidsuccessfulorder',page=1)}}">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>投标成功单管理</cite>
-                        </a>
-                    </li >
-                        <li>
-                        <a _href="{{url_for('admin.returnSales',page=1)}}">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>投标退标单管理</cite>
-                        </a>
-                    </li >
-                        </li >
+                            <cite>招标成功单管理</cite>
 
-                     <li>
-                        <a _href="{{url_for('admin.customerz',page=1)}}">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>投标单位管理</cite>
                         </a>
-                    </li >
+                    </li>
                 </ul>
             </li>
-
-
-             <li>
-                    <a href="javascript:;">
-                        <i class="iconfont">&#xe70b;</i>
-                        <cite>评标管理</cite>
-                        <i class="iconfont nav_right">&#xe697;</i>
-                    </a>
-                    <ul class="sub-menu">
-                        <li>
-                            <a _href="{{url_for('admin.seeWarehouse',page=1)}}">
-                                <i class="iconfont">&#xe6a7;</i>
-                                <cite>已评标管理</cite>
-
-                            </a>
-                        </li >
-                         <li>
-                            <a _href="{{url_for('admin.enteringWarehouse',page=1)}}">
-                                <i class="iconfont">&#xe6a7;</i>
-                                <cite>未评标管理</cite>
-
-                            </a>
-                        </li >
-                          <li>
-                        <a _href="{{url_for('admin.outWarehousing',page=1)}}">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>评标员管理</cite>
-                        </a>
-                    </li >
-
-                    </ul>
-             </li>
-
-            <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe723;</i>
-                    <cite>智能问答</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a _href="{{url_for('admin.purchasingStatistics')}}">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>AI助手</cite>
-                        </a>
-                    </li >
-                    <li>
-                        <a _href="{{url_for('admin.salesStatistics')}}">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>应标书生成</cite>
-                        </a>
-                    </li >
-<!--                    <li>-->
-<!--                        <a _href="{{url_for('admin.inventoryStatistics')}}">-->
-<!--                            <i class="iconfont">&#xe6a7;</i>-->
-<!--                            <cite>库存统计</cite>-->
-<!--                        </a>-->
-<!--                    </li >-->
-                </ul>
-            </li>
-
-
-            <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe726;</i>
-                    <cite>管理员管理</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a _href="{{url_for('admin.admin_list',page=1)}}">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>账号管理</cite>
-                        </a>
-                    </li >
-                                 <li>
-                        <a _href="{{url_for('admin.sections',page=1)}}">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>公告管理</cite>
-                        </a>
-                    </li >
-<!--                           <li>-->
-<!--                        <a _href="{{url_for('admin.dutylist',page=1)}}">-->
-<!--                            <i class="iconfont">&#xe6a7;</i>-->
-<!--                            <cite>职务管理</cite>-->
-<!--                        </a>-->
-<!--                    </li >-->
-                </ul>
-            </li>
-
-            <li>
-                 <a href="javascript:;">
-                    <i class="iconfont">&#xe70b;</i>
-                    <cite>系统管理</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a _href="{{url_for('admin.beifen')}}">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>备份数据</cite>
-                        </a>
-                    </li >
-                </ul>
-            </li>
-
         </ul>
-      </div>
     </div>
-
-    <div class="page-content">
-        <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
-          <ul class="layui-tab-title">
+</div>
+<div class="page-content">
+    <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+        <ul class="layui-tab-title">
             <li class="home"><i class="layui-icon">&#xe68e;</i>我的工作平台</li>
-          </ul>
-          <div class="layui-tab-content">
+        </ul>
+        <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
-                <iframe src='{{url_for("admin.workPlatform")}}' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+                <iframe src='{{url_for("admin.workPlatform")}}' class="x-iframe"></iframe>
             </div>
-          </div>
         </div>
     </div>
-    <div class="page-content-bg"></div>
+</div>
+<div class="page-content-bg"></div>
 
-    <div class="footer">
-        <div class="copyright">BBking-12138 ©2025</div>
-    </div>
-
-
-
-</html>
+<div class="footer">
+    <div class="copyright">BBking-12138 ©2025</div>
+</div>
 
 {% endblock %}

@@ -358,6 +358,7 @@ CREATE TABLE `user`  (
   CONSTRAINT `user_ibfk_4` FOREIGN KEY (`user_salary`) REFERENCES `salary` (`salary_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
+ALTER TABLE user MODIFY COLUMN user_pwd VARCHAR(512);
 -- ----------------------------
 -- Records of user
 -- ----------------------------

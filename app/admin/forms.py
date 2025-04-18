@@ -7,26 +7,27 @@ from wtforms import StringField, PasswordField, SubmitField, SelectField, TextAr
 from wtforms.validators import DataRequired
 
 from app.apps import app
-from app.models import goods, supplier, User, power, client, duty, section, warehouse
+# from app.models import goods, supplier, User, power, client, duty, section, warehouse
+from app.models import User, Project
 
 
 # 登陆表单
 class LoginForm(FlaskForm):
-    account = StringField(
-        label="用户名",
+    count = StringField(
+        label="登陆账号",
         validators=[
             DataRequired()
         ],
-        description="账号",
+        description="登陆账号",
         render_kw={
             "type": "text",
             "lay-verify": "required",
             "class": "layui-input",
-            "placeholder": "请输入账号！",
+            "placeholder": "请输入登陆账号！",
         }
 
     )
-    pwd = PasswordField(
+    password = PasswordField(
         label="密码",
         validators=[
             DataRequired()
@@ -65,20 +66,20 @@ class LoginForm(FlaskForm):
 
 # 注册表单
 class RegisterForm(FlaskForm):
-    account = StringField(
-        label='请输入用户名',
+    count = StringField(
+        label='请输入登陆账号',
         validators=[
             DataRequired()
         ],
-        description="输入用户名的输入框",
+        description="输入登陆账号的输入框",
         render_kw={
             "type": "text",
             "lay-verify": "required",
             "class": "layui-input",
-            "placeholder": "请输入登录名！",
+            "placeholder": "请输入登陆账号！",
         }
     )
-    pwd = PasswordField(
+    password = PasswordField(
         label='请输入密码',
         validators=[
             DataRequired()
@@ -91,7 +92,7 @@ class RegisterForm(FlaskForm):
             "lay-verify": "required",
         }
     )
-    repwd = PasswordField(
+    re_password = PasswordField(
         label='请确认密码',
         validators=[
             DataRequired()
@@ -104,7 +105,7 @@ class RegisterForm(FlaskForm):
             "lay-verify": "required",
         }
     )
-    name = StringField(
+    username = StringField(
         label='请输入真实姓名',
         validators=[
             DataRequired()
@@ -130,7 +131,7 @@ class RegisterForm(FlaskForm):
             "class": "contrller",
         }
     )
-    phone = StringField(
+    mobile = StringField(
         label='请输入电话号码',
         validators=[
             DataRequired()
@@ -143,7 +144,7 @@ class RegisterForm(FlaskForm):
             "lay-verify": "required",
         }
     )
-    mail = StringField(
+    email = StringField(
         label='请输入邮箱',
         validators=[
             DataRequired()
@@ -166,83 +167,83 @@ class RegisterForm(FlaskForm):
     )
 
 
-# 添加供应商
-class addsuppliers(FlaskForm):
-    name = StringField(
-        label='供货商名称',
-        validators=[
-            DataRequired("请输入供应商名称！")
-        ],
-        description="供应商名称",
-        render_kw={
-            "type": "text",
-            "placeholder": "供应商名称",
-            "autocomplete": "off",
-            "lay-verify": "required",
-            "class": "layui-input"
-        }
-    )
-
-    addre = StringField(
-        label='供应商地址',
-        validators=[
-            DataRequired("供应商地址！")
-        ],
-        description="供应商地址",
-        render_kw={
-            "type": "text",
-            "placeholder": "供应商地址",
-            "autocomplete": "off",
-            "lay-verify": "required",
-            "class": "layui-input"
-        }
-    )
-    credit = SelectField(
-        label="供应商级别",
-        validators=[
-            DataRequired("请选择供应商级别！")
-        ],
-        coerce=int,
-        choices=[(0, "供应商级别"), (1, "一星"), (2, "二星"), (3, "三星"), (4, "四星"), (5, "五星")],
-        description="供应商级别",
-        render_kw={
-            "class": "contrller",
-        }
-    )
-    submit = SubmitField(
-        "添加",
-        render_kw={
-            "class": "layui-btn",
-            "lay-filter": "subm",
-            "onclick": "mesg()"
-        }
-    )
-
-
-# 招标单位名称搜索
-class suppliersserach(FlaskForm):
-    name = StringField(
-        label='招标单位名称',
-        description="招标单位名称",
-        render_kw={
-            "type": "text",
-            "placeholder": "招标单位名称",
-            "autocomplete": "off",
-            "class": "layui-input"
-        }
-    )
-    submit = SubmitField(
-        "搜索",
-        render_kw={
-            "class": "layui-btn",
-            "lay-filter": "subm",
-            "onclick": "mesg()"
-        }
-    )
-
+# # 添加供应商
+# class addsuppliers(FlaskForm):
+#     name = StringField(
+#         label='供货商名称',
+#         validators=[
+#             DataRequired("请输入供应商名称！")
+#         ],
+#         description="供应商名称",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "供应商名称",
+#             "autocomplete": "off",
+#             "lay-verify": "required",
+#             "class": "layui-input"
+#         }
+#     )
+#
+#     addre = StringField(
+#         label='供应商地址',
+#         validators=[
+#             DataRequired("供应商地址！")
+#         ],
+#         description="供应商地址",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "供应商地址",
+#             "autocomplete": "off",
+#             "lay-verify": "required",
+#             "class": "layui-input"
+#         }
+#     )
+#     credit = SelectField(
+#         label="供应商级别",
+#         validators=[
+#             DataRequired("请选择供应商级别！")
+#         ],
+#         coerce=int,
+#         choices=[(0, "供应商级别"), (1, "一星"), (2, "二星"), (3, "三星"), (4, "四星"), (5, "五星")],
+#         description="供应商级别",
+#         render_kw={
+#             "class": "contrller",
+#         }
+#     )
+#     submit = SubmitField(
+#         "添加",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+#
+#
+# # 招标单位名称搜索
+# class suppliersserach(FlaskForm):
+#     name = StringField(
+#         label='招标单位名称',
+#         description="招标单位名称",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "招标单位名称",
+#             "autocomplete": "off",
+#             "class": "layui-input"
+#         }
+#     )
+#     submit = SubmitField(
+#         "搜索",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+#
 # 招标成功单搜索
-class purchsearch(FlaskForm):
-    goods_name = StringField(
+class BidSuccessfulSearch(FlaskForm):
+    tender_unit = StringField(
         description="请输入招标名称",
         render_kw={
             "type": "text",
@@ -251,15 +252,15 @@ class purchsearch(FlaskForm):
             "lay-verify": "required",
         }
     )
-    person_name = StringField(
-        description="评标员名称查询",
-        render_kw={
-            "type": "text",
-            "placeholder": "评标员名称查询",
-            "autocomplete": "off",
-            "class": "layui-input"
-        }
-    )
+    # person_name = StringField(
+    #     description="评标员名称查询",
+    #     render_kw={
+    #         "type": "text",
+    #         "placeholder": "评标员名称查询",
+    #         "autocomplete": "off",
+    #         "class": "layui-input"
+    #     }
+    # )
     submit = SubmitField(
         "搜索",
         render_kw={
@@ -269,61 +270,29 @@ class purchsearch(FlaskForm):
         }
     )
 
+# 添加招标信息
+# with app.app_context():
+    # goodsall = Project.query.all()
 
-# 退标单搜索
-class returnordersearch(FlaskForm):
-    goods_name = StringField(
-        description="请输入招标名称！",
+class IncreaseBidSuccessfulOrder(FlaskForm):
+    project_number = StringField(
+        label="项目编号",
+        validators=[
+            DataRequired("请输入项目编号！")
+        ],
+        description="项目编号",
         render_kw={
             "type": "text",
-            "placeholder": "请输入招标名称！",
+            "placeholder": "项目编号",
             "autocomplete": "off",
+            "lay-verify": "required",
             "class": "layui-input"
         }
     )
-    person_name = StringField(
-        description="评标员名称查询",
-        render_kw={
-            "type": "text",
-            "placeholder": "评标员名称查询",
-            "autocomplete": "off",
-            "class": "layui-input"
-        }
-    )
-    submit = SubmitField(
-        "搜索",
-        render_kw={
-            "class": "layui-btn",
-            "lay-filter": "subm",
-            "onclick": "mesg()"
-        }
-    )
-# 招标信息查询搜索
-class goodssearch(FlaskForm):
-    goods_name = StringField(
-        description="招标信息查询",
-        render_kw={
-            "type": "text",
-            "placeholder": "招标信息查询",
-            "autocomplete": "off",
-            "class": "layui-input"
-        }
-    )
-    submit = SubmitField(
-        "搜索",
-        render_kw={
-            "class": "layui-btn",
-            "lay-filter": "subm",
-            "onclick": "mesg()"
-        }
-    )
-
-# 添加商品名
-class addgoodsname(FlaskForm):
-    name = StringField(
+    project_name = StringField(
         label='招标名称',
         validators=[
-            DataRequired()
+            DataRequired("请输入招标名称！")
         ],
         description="招标名称",
         render_kw={
@@ -334,502 +303,43 @@ class addgoodsname(FlaskForm):
             "class": "layui-input"
         }
     )
-    price = FloatField(
-        label='商品单价',
+    project_introduction = StringField(
+        label="项目简介",
         validators=[
-            DataRequired()
+            DataRequired("请输入项目简介！")
         ],
-        description="商品单价",
+        description="项目简介",
         render_kw={
             "type": "text",
-            "placeholder": "商品单价",
+            "placeholder": "项目简介",
             "autocomplete": "off",
             "lay-verify": "required",
             "class": "layui-input"
         }
     )
-    info = TextAreaField(
-        label='商品简介',
-        description="商品简介",
+    notes = StringField(
+        label="备注",
+        validators=[
+            DataRequired("请输入备注！")
+        ],
+        description="备注",
         render_kw={
             "type": "text",
-            "placeholder": "商品简介",
+            "placeholder": "备注",
             "autocomplete": "off",
             "lay-verify": "required",
             "class": "layui-input"
         }
     )
-    submit = SubmitField(
-        "添加",
-        render_kw={
-            "class": "layui-btn",
-            "lay-filter": "subm",
-            "onclick": "mesg()"
-        }
-    )
-
-
-# 添加订单
-with app.app_context():
-    goodsall = goods.query.all()
-
-class increasePurchaseOrders(FlaskForm):
-    goods_name = SelectField(
-        label="货物名称",
+    tender_unit = StringField(
+        label='招标单位',
         validators=[
-            DataRequired("请选择供应商级别！")
+            DataRequired("请输入招标单位！")
         ],
-        coerce=int,
-        choices=[(i.goods_id, i.goods_name) for i in goodsall],
-        description="供应商级别",
-        render_kw={
-            "class": "contrller",
-            "type": "text",
-            "placeholder": "商品名称",
-            "autocomplete": "off",
-            "lay-verify": "required",
-        }
-    )
-    num = IntegerField(
-        label='进货数量',
-        validators=[
-            DataRequired("请输入进货数量！")
-        ],
-        description="进货数量",
+        description="招标单位",
         render_kw={
             "type": "text",
-            "placeholder": "进货数量",
-            "autocomplete": "off",
-            "lay-verify": "required",
-            "class": "layui-input"
-        }
-    )
-    suppliers = {1: "5"}
-    gys = SelectField(
-        label="供应商名称",
-        validators=[
-            DataRequired("请选择供应商名称！")
-        ],
-        coerce=int,
-        description="供应商名称",
-        render_kw={
-            "class": "form-control",
-        }
-    )
-    users = {1: "1"}
-    ywy = SelectField(
-        label="业务员名称",
-        validators=[
-            DataRequired("请选择供业务员名称！")
-        ],
-        coerce=int,
-        description="业务员名称",
-        render_kw={
-            "class": "form-control",
-        }
-    )
-    submit = SubmitField(
-        "添加",
-        render_kw={
-            "class": "layui-btn",
-            "lay-filter": "subm",
-            "onclick": "mesg()"
-        }
-    )
-
-
-# 销售订单搜索
-class salesorderssearch(FlaskForm):
-    goods_name = StringField(
-        description="招标名称查询",
-        render_kw={
-            "type": "text",
-            "placeholder": "招标名称查询",
-            "autocomplete": "off",
-            "class": "layui-input"
-        }
-    )
-    person_name = StringField(
-        description="投标单位查询",
-        render_kw={
-            "type": "text",
-            "placeholder": "投标单位查询",
-            "autocomplete": "off",
-            "class": "layui-input"
-        }
-    )
-
-    submit = SubmitField(
-        "搜索",
-        render_kw={
-            "class": "layui-btn",
-            "lay-filter": "subm",
-            "onclick": "mesg()"
-        }
-    )
-
-
-# 添加销售订单
-
-warehouses = {1: "1"}
-class addsaleorder(FlaskForm):
-    goods_name = SelectField(
-        label="货物名称",
-        validators=[
-            DataRequired("货物名称！")
-        ],
-        coerce=int,
-        description="供应商级别",
-        render_kw={
-            "class": "contrller",
-            "type": "text",
-            "placeholder": "商品名称",
-            "autocomplete": "off",
-            "lay-verify": "required",
-        }
-    )
-    num = IntegerField(
-        label='销售数量',
-        validators=[
-            DataRequired("请输入销售数量！")
-        ],
-        description="销售数量",
-        render_kw={
-            "type": "text",
-            "placeholder": "销售数量",
-            "autocomplete": "off",
-            "lay-verify": "required",
-            "class": "layui-input"
-        }
-    )
-    clients = {1: "k"}
-    gk = SelectField(
-        label="顾客名称",
-        validators=[
-            DataRequired("请选择顾客名称！")
-        ],
-        coerce=int,
-        description="顾客名称",
-        render_kw={
-            "class": "form-control",
-        }
-    )
-    # users = User.query.all()
-    users = {"1": 5}
-    ywy = SelectField(
-        label="业务员名称",
-        validators=[
-            DataRequired("请选择供业务员名称！")
-        ],
-        coerce=int,
-        # choices=[(i.user_id, i.user_name) for i in users],
-        description="业务员名称",
-        render_kw={
-            "class": "form-control",
-        }
-    )
-
-    submit = SubmitField(
-        "添加",
-        render_kw={
-            "class": "layui-btn",
-            "lay-filter": "subm",
-            "onclick": "mesg()"
-        }
-    )
-
-
-# 退货订单搜索
-class returnsalessearch(FlaskForm):
-    goods_name = StringField(
-        description="招标名称查询",
-        render_kw={
-            "type": "text",
-            "placeholder": "招标名称查询",
-            "autocomplete": "off",
-            "class": "layui-input"
-        }
-    )
-    person_name = StringField(
-        description="投标单位查询",
-        render_kw={
-            "type": "text",
-            "placeholder": "投标单位查询",
-            "autocomplete": "off",
-            "class": "layui-input"
-        }
-    )
-
-    submit = SubmitField(
-        "搜索",
-        render_kw={
-            "class": "layui-btn",
-            "lay-filter": "subm",
-            "onclick": "mesg()"
-        }
-    )
-
-
-# 添加退货单
-class addreturnorder(FlaskForm):
-    goods_name = SelectField(
-        label="货物名称",
-        validators=[
-            DataRequired("请选择供应商级别！")
-        ],
-        coerce=int,
-        # choices=[(i.goods_id, i.goods_name) for i in goodsall],
-        description="供应商级别",
-        render_kw={
-            "class": "contrller",
-            "type": "text",
-            "placeholder": "商品名称",
-            "autocomplete": "off",
-            "lay-verify": "required",
-        }
-    )
-    num = IntegerField(
-        label='进货数量',
-        validators=[
-            DataRequired("请输入进货数量！")
-        ],
-        description="进货数量",
-        render_kw={
-            "type": "text",
-            "placeholder": "进货数量",
-            "autocomplete": "off",
-            "lay-verify": "required",
-            "class": "layui-input"
-        }
-    )
-    # suppliers = supplier.query.all()
-    suppliers = {1: "l"}
-    gys = SelectField(
-        label="供应商名称",
-        validators=[
-            DataRequired("请选择供应商名称！")
-        ],
-        coerce=int,
-        # choices=[(i.supplier_id, i.supplier_name) for i in suppliers],
-        description="供应商名称",
-        render_kw={
-            "class": "form-control",
-        }
-    )
-    # users = User.query.all()
-    users = {"1": 5}
-    ywy = SelectField(
-        label="业务员名称",
-        validators=[
-            DataRequired("请选择供业务员名称！")
-        ],
-        coerce=int,
-        # choices=[(i.user_id, i.user_name) for i in users],
-        description="业务员名称",
-        render_kw={
-            "class": "form-control",
-        }
-    )
-    submit = SubmitField(
-        "添加",
-        render_kw={
-            "class": "layui-btn",
-            "lay-filter": "subm",
-            "onclick": "mesg()"
-        }
-    )
-
-
-# 客户管理查询
-class customesserch(FlaskForm):
-    name = StringField(
-        description="投标商姓名查询",
-        render_kw={
-            "type": "text",
-            "placeholder": "投标商姓名查询",
-            "autocomplete": "off",
-            "class": "layui-input"
-        }
-    )
-    phone = StringField(
-        description="手机号查询",
-        render_kw={
-            "type": "text",
-            "placeholder": "手机号查询",
-            "autocomplete": "off",
-            "class": "layui-input"
-        }
-    )
-    submit = SubmitField(
-        "搜索",
-        render_kw={
-            "class": "layui-btn",
-            "lay-filter": "subm",
-            "onclick": "mesg()"
-        }
-    )
-
-
-# 添加客户
-class addcustomes(FlaskForm):
-    name = StringField(
-        label='客户名',
-        validators=[
-            DataRequired()
-        ],
-        description="客户名",
-        render_kw={
-            "type": "text",
-            "placeholder": "客户名",
-            "autocomplete": "off",
-            "lay-verify": "required",
-            "class": "layui-input"
-        }
-    )
-    addr = StringField(
-        label='客户地址',
-        validators=[
-            DataRequired()
-        ],
-        description="客户地址",
-        render_kw={
-            "type": "text",
-            "placeholder": "客户地址",
-            "autocomplete": "off",
-            "lay-verify": "required",
-            "class": "layui-input"
-        }
-    )
-    phone = StringField(
-        label='客户手机',
-        description="客户手机",
-        render_kw={
-            "type": "text",
-            "placeholder": "客户手机",
-            "autocomplete": "off",
-            "lay-verify": "required",
-            "class": "layui-input"
-        }
-    )
-    credit = SelectField(
-        label="客户级别",
-        coerce=int,
-        # choices=[(0, "客户级别"), (1, "一星"), (2, "二星"), (3, "三星"), (4, "四星"), (5, "五星")],
-        description="客户级别",
-        render_kw={
-            "class": "contrller",
-        }
-    )
-    submit = SubmitField(
-        "添加",
-        render_kw={
-            "class": "layui-btn",
-            "lay-filter": "subm",
-            "onclick": "mesg()"
-        }
-    )
-
-
-# 库存查询
-class warehouseserch(FlaskForm):
-    name = StringField(
-        description="招标名称查询",
-        render_kw={
-            "type": "text",
-            "placeholder": "招标名称查询",
-            "autocomplete": "off",
-            "class": "layui-input"
-        }
-    )
-    gys = StringField(
-        description="评标员查询",
-        render_kw={
-            "type": "text",
-            "placeholder": "评标员查询",
-            "autocomplete": "off",
-            "class": "layui-input"
-        }
-    )
-    submit = SubmitField(
-        "搜索",
-        render_kw={
-            "class": "layui-btn",
-            "lay-filter": "subm",
-            "onclick": "mesg()"
-        }
-    )
-
-
-# 入库搜索
-class enteringwarehouseserach(FlaskForm):
-    name = StringField(
-        description="招标名称查询",
-        render_kw={
-            "type": "text",
-            "placeholder": "招标名称查询",
-            "autocomplete": "off",
-            "class": "layui-input"
-        }
-    )
-    ywy = StringField(
-        description="评标员查询",
-        render_kw={
-            "type": "text",
-            "placeholder": "评标员查询",
-            "autocomplete": "off",
-            "class": "layui-input"
-        }
-    )
-    submit = SubmitField(
-        "搜索",
-        render_kw={
-            "class": "layui-btn",
-            "lay-filter": "subm",
-            "onclick": "mesg()"
-        }
-    )
-
-
-# 出库搜索
-class outWarehousingsearch(FlaskForm):
-    name = StringField(
-        description="招标名称查询",
-        render_kw={
-            "type": "text",
-            "placeholder": "招标名称查询",
-            "autocomplete": "off",
-            "class": "layui-input"
-        }
-    )
-    ywy = StringField(
-        description="评标员查询",
-        render_kw={
-            "type": "text",
-            "placeholder": "评标员查询",
-            "autocomplete": "off",
-            "class": "layui-input"
-        }
-    )
-    submit = SubmitField(
-        "搜索",
-        render_kw={
-            "class": "layui-btn",
-            "lay-filter": "subm",
-            "onclick": "mesg()"
-        }
-    )
-
-# 添加部门
-class addsection(FlaskForm):
-    name = StringField(
-        label='部门名',
-        validators=[
-            DataRequired()
-        ],
-        description="部门名",
-        render_kw={
-            "type": "text",
-            "placeholder": "部门名",
+            "placeholder": "招标单位",
             "autocomplete": "off",
             "lay-verify": "required",
             "class": "layui-input"
@@ -844,113 +354,89 @@ class addsection(FlaskForm):
         }
     )
 
-# 添加职务
-class adddutys(FlaskForm):
-    name = StringField(
-        label='职务名',
+class TenderRevise(FlaskForm):
+    id = StringField(
+        label="项目id",
         validators=[
-            DataRequired()
+            DataRequired("请输入项目id！")
         ],
-        description="职务名",
+        description="项目id",
         render_kw={
             "type": "text",
-            "placeholder": "职务名",
+            "placeholder": "项目id",
             "autocomplete": "off",
+            "lay-verify": "required",
             "class": "layui-input"
         }
     )
-    submit = SubmitField(
-        "添加",
-        render_kw={
-            "class": "layui-btn",
-            "lay-filter": "subm",
-            "onclick": "mesg()"
-        }
-    )
-
-# 修改权限
-powers = {"1": 6}
-users = {"5": 6}
-
-
-class powerss(FlaskForm):
-    account = SelectField(
-        label="请选择用户名",
+    project_introduction = StringField(
+        label="项目简介",
         validators=[
-            DataRequired()
+            DataRequired("请修改项目简介！")
         ],
-        coerce=int,
-        # choices=[(i.user_id, i.user_name) for i in users],
-        description="请选择权限",
+        description="项目简介",
         render_kw={
-            "class": "contrller",
+            "type": "text",
+            "placeholder": "项目简介",
+            "autocomplete": "off",
+            "lay-verify": "required",
+            "class": "layui-input"
         }
     )
-
-    powerss = SelectField(
-        label="请选择权限",
+    notes = StringField(
+        label="备注",
         validators=[
-            DataRequired()
+            DataRequired("请修改备注！")
         ],
-        coerce=int,
-        # choices=[(i.power_id, i.power_name) for i in powers],
-        description="请选择权限",
+        description="备注",
         render_kw={
-            "class": "contrller",
+            "type": "text",
+            "placeholder": "备注",
+            "autocomplete": "off",
+            "lay-verify": "required",
+            "class": "layui-input"
         }
     )
-
-    submit = SubmitField(
-        "修改",
-        render_kw={
-            "class": "layui-btn",
-            "lay-filter": "subm",
-            "onclick": "mesg()"
-        }
-    )
-
-
-# 修改部门和职务
-
-dutys = {1: 5}
-sections = {"p": 5}
-
-class bumens(FlaskForm):
-    account = SelectField(
-        label="请选择用户名",
+    tender_unit = StringField(
+        label='招标单位',
         validators=[
-            DataRequired()
+            DataRequired("请修改招标单位！")
         ],
-        coerce=int,
-        # choices=[(i.user_id, i.user_name) for i in users],
-        description="用户名",
+        description="招标单位",
         render_kw={
-            "class": "contrller",
+            "type": "text",
+            "placeholder": "招标单位",
+            "autocomplete": "off",
+            "lay-verify": "required",
+            "class": "layui-input"
         }
     )
-
-    dutyser = SelectField(
-        label="请选择职务",
+    bid_unit = StringField(
+        label='投标单位',
         validators=[
-            DataRequired()
+            DataRequired("请修改投标单位！")
         ],
-        coerce=int,
-        # choices=[(i.duty_id, i.duty_name) for i in dutys],
-        description="请选择职务",
+        description="投标单位",
         render_kw={
-            "class": "contrller",
+            "type": "text",
+            "placeholder": "投标单位",
+            "autocomplete": "off",
+            "lay-verify": "required",
+            "class": "layui-input"
         }
     )
-    sectionsr = SelectField(
-        label="请选择部门",
+    status_id = StringField(
+        label='招标状态',
         validators=[
-            DataRequired()
+            DataRequired("请修改招标状态！")
         ],
-        coerce=int,
-        # choices=[(i.section_id, i.section_name) for i in sections],
-        description="请选择部门",
+        description="招标状态",
         render_kw={
-            "class": "contrller",
+            "type": "text",
+            "placeholder": "招标状态",
+            "autocomplete": "off",
+            "lay-verify": "required",
+            "class": "layui-input"
         }
     )
     submit = SubmitField(
@@ -961,7 +447,728 @@ class bumens(FlaskForm):
             "onclick": "mesg()"
         }
     )
-
+# # 招标成功单搜索
+# class purchsearch(FlaskForm):
+#     goods_name = StringField(
+#         description="请输入招标名称",
+#         render_kw={
+#             "type": "text",
+#             "class": "layui-input",
+#             "placeholder": "请输入招标名称！",
+#             "lay-verify": "required",
+#         }
+#     )
+#     person_name = StringField(
+#         description="评标员名称查询",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "评标员名称查询",
+#             "autocomplete": "off",
+#             "class": "layui-input"
+#         }
+#     )
+#     submit = SubmitField(
+#         "搜索",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+#
+#
+# # 退标单搜索
+# class returnordersearch(FlaskForm):
+#     goods_name = StringField(
+#         description="请输入招标名称！",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "请输入招标名称！",
+#             "autocomplete": "off",
+#             "class": "layui-input"
+#         }
+#     )
+#     person_name = StringField(
+#         description="评标员名称查询",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "评标员名称查询",
+#             "autocomplete": "off",
+#             "class": "layui-input"
+#         }
+#     )
+#     submit = SubmitField(
+#         "搜索",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+# # 招标信息查询搜索
+# class goodssearch(FlaskForm):
+#     goods_name = StringField(
+#         description="招标信息查询",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "招标信息查询",
+#             "autocomplete": "off",
+#             "class": "layui-input"
+#         }
+#     )
+#     submit = SubmitField(
+#         "搜索",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+#
+# # 添加商品名
+# class addgoodsname(FlaskForm):
+#     name = StringField(
+#         label='招标名称',
+#         validators=[
+#             DataRequired()
+#         ],
+#         description="招标名称",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "招标名称",
+#             "autocomplete": "off",
+#             "lay-verify": "required",
+#             "class": "layui-input"
+#         }
+#     )
+#     price = FloatField(
+#         label='商品单价',
+#         validators=[
+#             DataRequired()
+#         ],
+#         description="商品单价",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "商品单价",
+#             "autocomplete": "off",
+#             "lay-verify": "required",
+#             "class": "layui-input"
+#         }
+#     )
+#     info = TextAreaField(
+#         label='商品简介',
+#         description="商品简介",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "商品简介",
+#             "autocomplete": "off",
+#             "lay-verify": "required",
+#             "class": "layui-input"
+#         }
+#     )
+#     submit = SubmitField(
+#         "添加",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+#
+#
+# # 添加订单
+# with app.app_context():
+#     goodsall = goods.query.all()
+#
+# class increasePurchaseOrders(FlaskForm):
+#     goods_name = SelectField(
+#         label="货物名称",
+#         validators=[
+#             DataRequired("请选择供应商级别！")
+#         ],
+#         coerce=int,
+#         choices=[(i.goods_id, i.goods_name) for i in goodsall],
+#         description="供应商级别",
+#         render_kw={
+#             "class": "contrller",
+#             "type": "text",
+#             "placeholder": "商品名称",
+#             "autocomplete": "off",
+#             "lay-verify": "required",
+#         }
+#     )
+#     num = IntegerField(
+#         label='进货数量',
+#         validators=[
+#             DataRequired("请输入进货数量！")
+#         ],
+#         description="进货数量",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "进货数量",
+#             "autocomplete": "off",
+#             "lay-verify": "required",
+#             "class": "layui-input"
+#         }
+#     )
+#     suppliers = {1: "5"}
+#     gys = SelectField(
+#         label="供应商名称",
+#         validators=[
+#             DataRequired("请选择供应商名称！")
+#         ],
+#         coerce=int,
+#         description="供应商名称",
+#         render_kw={
+#             "class": "form-control",
+#         }
+#     )
+#     users = {1: "1"}
+#     ywy = SelectField(
+#         label="业务员名称",
+#         validators=[
+#             DataRequired("请选择供业务员名称！")
+#         ],
+#         coerce=int,
+#         description="业务员名称",
+#         render_kw={
+#             "class": "form-control",
+#         }
+#     )
+#     submit = SubmitField(
+#         "添加",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+#
+#
+# # 销售订单搜索
+# class salesorderssearch(FlaskForm):
+#     goods_name = StringField(
+#         description="招标名称查询",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "招标名称查询",
+#             "autocomplete": "off",
+#             "class": "layui-input"
+#         }
+#     )
+#     person_name = StringField(
+#         description="投标单位查询",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "投标单位查询",
+#             "autocomplete": "off",
+#             "class": "layui-input"
+#         }
+#     )
+#
+#     submit = SubmitField(
+#         "搜索",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+#
+#
+# # 添加销售订单
+#
+# warehouses = {1: "1"}
+# class addsaleorder(FlaskForm):
+#     goods_name = SelectField(
+#         label="货物名称",
+#         validators=[
+#             DataRequired("货物名称！")
+#         ],
+#         coerce=int,
+#         description="供应商级别",
+#         render_kw={
+#             "class": "contrller",
+#             "type": "text",
+#             "placeholder": "商品名称",
+#             "autocomplete": "off",
+#             "lay-verify": "required",
+#         }
+#     )
+#     num = IntegerField(
+#         label='销售数量',
+#         validators=[
+#             DataRequired("请输入销售数量！")
+#         ],
+#         description="销售数量",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "销售数量",
+#             "autocomplete": "off",
+#             "lay-verify": "required",
+#             "class": "layui-input"
+#         }
+#     )
+#     clients = {1: "k"}
+#     gk = SelectField(
+#         label="顾客名称",
+#         validators=[
+#             DataRequired("请选择顾客名称！")
+#         ],
+#         coerce=int,
+#         description="顾客名称",
+#         render_kw={
+#             "class": "form-control",
+#         }
+#     )
+#     # users = User.query.all()
+#     users = {"1": 5}
+#     ywy = SelectField(
+#         label="业务员名称",
+#         validators=[
+#             DataRequired("请选择供业务员名称！")
+#         ],
+#         coerce=int,
+#         # choices=[(i.user_id, i.user_name) for i in users],
+#         description="业务员名称",
+#         render_kw={
+#             "class": "form-control",
+#         }
+#     )
+#
+#     submit = SubmitField(
+#         "添加",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+#
+#
+# # 退货订单搜索
+# class returnsalessearch(FlaskForm):
+#     goods_name = StringField(
+#         description="招标名称查询",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "招标名称查询",
+#             "autocomplete": "off",
+#             "class": "layui-input"
+#         }
+#     )
+#     person_name = StringField(
+#         description="投标单位查询",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "投标单位查询",
+#             "autocomplete": "off",
+#             "class": "layui-input"
+#         }
+#     )
+#
+#     submit = SubmitField(
+#         "搜索",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+#
+#
+# # 添加退货单
+# class addreturnorder(FlaskForm):
+#     goods_name = SelectField(
+#         label="货物名称",
+#         validators=[
+#             DataRequired("请选择供应商级别！")
+#         ],
+#         coerce=int,
+#         # choices=[(i.goods_id, i.goods_name) for i in goodsall],
+#         description="供应商级别",
+#         render_kw={
+#             "class": "contrller",
+#             "type": "text",
+#             "placeholder": "商品名称",
+#             "autocomplete": "off",
+#             "lay-verify": "required",
+#         }
+#     )
+#     num = IntegerField(
+#         label='进货数量',
+#         validators=[
+#             DataRequired("请输入进货数量！")
+#         ],
+#         description="进货数量",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "进货数量",
+#             "autocomplete": "off",
+#             "lay-verify": "required",
+#             "class": "layui-input"
+#         }
+#     )
+#     # suppliers = supplier.query.all()
+#     suppliers = {1: "l"}
+#     gys = SelectField(
+#         label="供应商名称",
+#         validators=[
+#             DataRequired("请选择供应商名称！")
+#         ],
+#         coerce=int,
+#         # choices=[(i.supplier_id, i.supplier_name) for i in suppliers],
+#         description="供应商名称",
+#         render_kw={
+#             "class": "form-control",
+#         }
+#     )
+#     # users = User.query.all()
+#     users = {"1": 5}
+#     ywy = SelectField(
+#         label="业务员名称",
+#         validators=[
+#             DataRequired("请选择供业务员名称！")
+#         ],
+#         coerce=int,
+#         # choices=[(i.user_id, i.user_name) for i in users],
+#         description="业务员名称",
+#         render_kw={
+#             "class": "form-control",
+#         }
+#     )
+#     submit = SubmitField(
+#         "添加",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+#
+#
+# # 客户管理查询
+# class customesserch(FlaskForm):
+#     name = StringField(
+#         description="投标商姓名查询",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "投标商姓名查询",
+#             "autocomplete": "off",
+#             "class": "layui-input"
+#         }
+#     )
+#     phone = StringField(
+#         description="手机号查询",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "手机号查询",
+#             "autocomplete": "off",
+#             "class": "layui-input"
+#         }
+#     )
+#     submit = SubmitField(
+#         "搜索",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+#
+#
+# # 添加客户
+# class addcustomes(FlaskForm):
+#     name = StringField(
+#         label='客户名',
+#         validators=[
+#             DataRequired()
+#         ],
+#         description="客户名",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "客户名",
+#             "autocomplete": "off",
+#             "lay-verify": "required",
+#             "class": "layui-input"
+#         }
+#     )
+#     addr = StringField(
+#         label='客户地址',
+#         validators=[
+#             DataRequired()
+#         ],
+#         description="客户地址",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "客户地址",
+#             "autocomplete": "off",
+#             "lay-verify": "required",
+#             "class": "layui-input"
+#         }
+#     )
+#     phone = StringField(
+#         label='客户手机',
+#         description="客户手机",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "客户手机",
+#             "autocomplete": "off",
+#             "lay-verify": "required",
+#             "class": "layui-input"
+#         }
+#     )
+#     credit = SelectField(
+#         label="客户级别",
+#         coerce=int,
+#         # choices=[(0, "客户级别"), (1, "一星"), (2, "二星"), (3, "三星"), (4, "四星"), (5, "五星")],
+#         description="客户级别",
+#         render_kw={
+#             "class": "contrller",
+#         }
+#     )
+#     submit = SubmitField(
+#         "添加",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+#
+#
+# # 库存查询
+# class warehouseserch(FlaskForm):
+#     name = StringField(
+#         description="招标名称查询",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "招标名称查询",
+#             "autocomplete": "off",
+#             "class": "layui-input"
+#         }
+#     )
+#     gys = StringField(
+#         description="评标员查询",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "评标员查询",
+#             "autocomplete": "off",
+#             "class": "layui-input"
+#         }
+#     )
+#     submit = SubmitField(
+#         "搜索",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+#
+#
+# # 入库搜索
+# class enteringwarehouseserach(FlaskForm):
+#     name = StringField(
+#         description="招标名称查询",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "招标名称查询",
+#             "autocomplete": "off",
+#             "class": "layui-input"
+#         }
+#     )
+#     ywy = StringField(
+#         description="评标员查询",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "评标员查询",
+#             "autocomplete": "off",
+#             "class": "layui-input"
+#         }
+#     )
+#     submit = SubmitField(
+#         "搜索",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+#
+#
+# # 出库搜索
+# class outWarehousingsearch(FlaskForm):
+#     name = StringField(
+#         description="招标名称查询",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "招标名称查询",
+#             "autocomplete": "off",
+#             "class": "layui-input"
+#         }
+#     )
+#     ywy = StringField(
+#         description="评标员查询",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "评标员查询",
+#             "autocomplete": "off",
+#             "class": "layui-input"
+#         }
+#     )
+#     submit = SubmitField(
+#         "搜索",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+#
+# # 添加部门
+# class addsection(FlaskForm):
+#     name = StringField(
+#         label='部门名',
+#         validators=[
+#             DataRequired()
+#         ],
+#         description="部门名",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "部门名",
+#             "autocomplete": "off",
+#             "lay-verify": "required",
+#             "class": "layui-input"
+#         }
+#     )
+#     submit = SubmitField(
+#         "添加",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+#
+# # 添加职务
+# class adddutys(FlaskForm):
+#     name = StringField(
+#         label='职务名',
+#         validators=[
+#             DataRequired()
+#         ],
+#         description="职务名",
+#         render_kw={
+#             "type": "text",
+#             "placeholder": "职务名",
+#             "autocomplete": "off",
+#             "class": "layui-input"
+#         }
+#     )
+#     submit = SubmitField(
+#         "添加",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+#
+# # 修改权限
+# powers = {"1": 6}
+# users = {"5": 6}
+#
+#
+# class powerss(FlaskForm):
+#     account = SelectField(
+#         label="请选择用户名",
+#         validators=[
+#             DataRequired()
+#         ],
+#         coerce=int,
+#         # choices=[(i.user_id, i.user_name) for i in users],
+#         description="请选择权限",
+#         render_kw={
+#             "class": "contrller",
+#         }
+#     )
+#
+#     powerss = SelectField(
+#         label="请选择权限",
+#         validators=[
+#             DataRequired()
+#         ],
+#         coerce=int,
+#         # choices=[(i.power_id, i.power_name) for i in powers],
+#         description="请选择权限",
+#         render_kw={
+#             "class": "contrller",
+#         }
+#     )
+#
+#     submit = SubmitField(
+#         "修改",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+#
+#
+# # 修改部门和职务
+#
+# dutys = {1: 5}
+# sections = {"p": 5}
+#
+# class bumens(FlaskForm):
+#     account = SelectField(
+#         label="请选择用户名",
+#         validators=[
+#             DataRequired()
+#         ],
+#         coerce=int,
+#         # choices=[(i.user_id, i.user_name) for i in users],
+#         description="用户名",
+#         render_kw={
+#             "class": "contrller",
+#         }
+#     )
+#
+#     dutyser = SelectField(
+#         label="请选择职务",
+#         validators=[
+#             DataRequired()
+#         ],
+#         coerce=int,
+#         # choices=[(i.duty_id, i.duty_name) for i in dutys],
+#         description="请选择职务",
+#         render_kw={
+#             "class": "contrller",
+#         }
+#     )
+#     sectionsr = SelectField(
+#         label="请选择部门",
+#         validators=[
+#             DataRequired()
+#         ],
+#         coerce=int,
+#         # choices=[(i.section_id, i.section_name) for i in sections],
+#         description="请选择部门",
+#         render_kw={
+#             "class": "contrller",
+#         }
+#     )
+#     submit = SubmitField(
+#         "修改",
+#         render_kw={
+#             "class": "layui-btn",
+#             "lay-filter": "subm",
+#             "onclick": "mesg()"
+#         }
+#     )
+#
 # 修改密码
 class alertpasswd(FlaskForm):
     account = StringField(
@@ -978,7 +1185,7 @@ class alertpasswd(FlaskForm):
             'autocomplete': 'off'
         }
     )
-    pwd = PasswordField(
+    password = PasswordField(
         label='请输入新密码',
         validators=[
             DataRequired()
@@ -992,7 +1199,7 @@ class alertpasswd(FlaskForm):
             'autocomplete': 'off'
         }
     )
-    repwd = PasswordField(
+    re_password = PasswordField(
         label='请确认密码',
         validators=[
             DataRequired()
@@ -1017,21 +1224,21 @@ class alertpasswd(FlaskForm):
 
 # 忘记密码
 class wjpasswd(FlaskForm):
-    countname = StringField(
-        label='请输入登录名',
+    count = StringField(
+        label='请输入登陆账号',
         validators=[
             DataRequired()
         ],
-        description="请输入登录名",
+        description="请输入登陆账号",
         render_kw={
             "type": "text",
             "lay-verify": "required",
             "class": "layui-input",
-            "placeholder": "请输入登录名！",
+            "placeholder": "请输入登陆账号！",
             'autocomplete': 'off'
         }
     )
-    account = StringField(
+    email = StringField(
         label='请输入邮箱',
         validators=[
             DataRequired()
@@ -1045,7 +1252,7 @@ class wjpasswd(FlaskForm):
             'autocomplete': 'off'
         }
     )
-    pwd = PasswordField(
+    password = PasswordField(
         label='请输入新密码',
         validators=[
             DataRequired()
@@ -1059,7 +1266,7 @@ class wjpasswd(FlaskForm):
             'autocomplete': 'off'
         }
     )
-    repwd = PasswordField(
+    re_password = PasswordField(
         label='请确认密码',
         validators=[
             DataRequired()

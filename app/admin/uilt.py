@@ -10,7 +10,7 @@ from pyecharts import options as opts
 from pyecharts.charts import Bar, Line, Pie
 from sqlalchemy import extract, func
 from app.apps import db
-from app.models import Purchase, sales, warehouse, goods
+# from app.models import Purchase, sales, warehouse, goods
 
 
 # ... [验证码生成函数不变] ...
@@ -52,75 +52,75 @@ def get_verify_code():
     im = im.filter(ImageFilter.GaussianBlur(radius=1.5))
     return im, code
 
-# 进货图表
-def bars():
-    bar = bar_chart()
-    return bar
-
-
-def bar_chart():
-    d = db.session.query(
-        func.count(extract('Day', Purchase.purchase_addtime)),
-        extract('Day', Purchase.purchase_addtime)
-    ).group_by(extract('Day', Purchase.purchase_addtime)).all()
-
-    attr = ["{}号".format(j) for _, j in d]
-    v1 = [i for i, _ in d]
-
-    bar = Bar()
-    bar.add_xaxis(attr)
-    bar.add_yaxis("采购量", v1)
-    bar.set_global_opts(
-        title_opts=opts.TitleOpts(title="日采购量"),
-        datazoom_opts=[
-            opts.DataZoomOpts(type_="slider", range_start=10, range_end=25),
-            opts.DataZoomOpts(type_="inside", range_start=10, range_end=25)
-        ]
-    )
-    return bar
-
-
-# 库存图表
-def pies():
-    d = db.session.query(
-        func.sum(warehouse.warehouse_goods_num).label('total'),
-        goods.goods_name
-    ).join(goods, warehouse.warehouse_goods_name == goods.goods_name)\
-    .group_by(goods.goods_name).all()
-
-    attr = [j for _, j in d]
-    v1 = [i for i, _ in d]
-
-    pie = Pie()
-    pie.add("", [list(z) for z in zip(attr, v1)])
-    pie.set_global_opts(
-        title_opts=opts.TitleOpts(title="库存统计"),
-        legend_opts=opts.LegendOpts(orient="vertical", pos_top="15%", pos_left="2%")
-    )
-    pie.set_series_opts(label_opts=opts.LabelOpts(formatter="{b}: {c}"))
-    return pie
-
-# 销售图表
-def lines():
-    sale = db.session.query(
-        func.count(extract('Day', sales.sales_addtime)).label('count'),
-        extract('Day', sales.sales_addtime).label('day')
-    ).group_by(extract('Day', sales.sales_addtime)).all()
-
-    attr = [i for _, i in sale]
-    v1 = [j for j, _ in sale]
-
-    line = Line()
-    line.add_xaxis(attr)
-    line.add_yaxis("销售量", v1)
-    line.set_global_opts(
-        title_opts=opts.TitleOpts(title="日销售量"),
-        datazoom_opts=[
-            opts.DataZoomOpts(type_="slider", range_start=10, range_end=25),
-            opts.DataZoomOpts(type_="inside", range_start=10, range_end=25)
-        ]
-    )
-    return line
+# # 进货图表
+# def bars():
+#     bar = bar_chart()
+#     return bar
+#
+#
+# def bar_chart():
+#     d = db.session.query(
+#         func.count(extract('Day', Purchase.purchase_addtime)),
+#         extract('Day', Purchase.purchase_addtime)
+#     ).group_by(extract('Day', Purchase.purchase_addtime)).all()
+#
+#     attr = ["{}号".format(j) for _, j in d]
+#     v1 = [i for i, _ in d]
+#
+#     bar = Bar()
+#     bar.add_xaxis(attr)
+#     bar.add_yaxis("采购量", v1)
+#     bar.set_global_opts(
+#         title_opts=opts.TitleOpts(title="日采购量"),
+#         datazoom_opts=[
+#             opts.DataZoomOpts(type_="slider", range_start=10, range_end=25),
+#             opts.DataZoomOpts(type_="inside", range_start=10, range_end=25)
+#         ]
+#     )
+#     return bar
+#
+#
+# # 库存图表
+# def pies():
+#     d = db.session.query(
+#         func.sum(warehouse.warehouse_goods_num).label('total'),
+#         goods.goods_name
+#     ).join(goods, warehouse.warehouse_goods_name == goods.goods_name)\
+#     .group_by(goods.goods_name).all()
+#
+#     attr = [j for _, j in d]
+#     v1 = [i for i, _ in d]
+#
+#     pie = Pie()
+#     pie.add("", [list(z) for z in zip(attr, v1)])
+#     pie.set_global_opts(
+#         title_opts=opts.TitleOpts(title="库存统计"),
+#         legend_opts=opts.LegendOpts(orient="vertical", pos_top="15%", pos_left="2%")
+#     )
+#     pie.set_series_opts(label_opts=opts.LabelOpts(formatter="{b}: {c}"))
+#     return pie
+#
+# # 销售图表
+# def lines():
+#     sale = db.session.query(
+#         func.count(extract('Day', sales.sales_addtime)).label('count'),
+#         extract('Day', sales.sales_addtime).label('day')
+#     ).group_by(extract('Day', sales.sales_addtime)).all()
+#
+#     attr = [i for _, i in sale]
+#     v1 = [j for j, _ in sale]
+#
+#     line = Line()
+#     line.add_xaxis(attr)
+#     line.add_yaxis("销售量", v1)
+#     line.set_global_opts(
+#         title_opts=opts.TitleOpts(title="日销售量"),
+#         datazoom_opts=[
+#             opts.DataZoomOpts(type_="slider", range_start=10, range_end=25),
+#             opts.DataZoomOpts(type_="inside", range_start=10, range_end=25)
+#         ]
+#     )
+#     return line
 
 def on_created():
     nowTime = datetime.datetime.now().strftime("%Y%m%d%H%M%S");  # 生成当前时间

@@ -7,36 +7,35 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8b38e18f-c11c-41bd-9b10-789cfc819a7a" name="Default" comment="适配性修改">
-      <change beforePath="$PROJECT_DIR$/.cursorrules" beforeDir="false" afterPath="$PROJECT_DIR$/.cursorrules" afterDir="false" />
+    <list default="true" id="8b38e18f-c11c-41bd-9b10-789cfc819a7a" name="Default" comment="修改标题">
+      <change afterPath="$PROJECT_DIR$/20250415.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/templates/admin/tenderRevise.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/aea92b3c-b5fe-4a94-b056-621a2f396b63.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ba2de565-ced8-4467-82db-40164a2dfeac.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b816972b-03cb-4375-8626-d2c7a2c86d13.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/b816972b-03cb-4375-8626-d2c7a2c86d13.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/admin/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/404/404.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/404/404.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/css/xadmin.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/xadmin.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/admin/admin_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/admin_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/admin/bases.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/bases.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/uilt.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/uilt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/admin/categoryOfGoods.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/categoryOfGoods.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/admin/customerz.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/customerz.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/admin/enteringWarehouse.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/enteringWarehouse.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/admin/goodsWarehousing.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/goodsWarehousing.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/admin/increasePurchaseOrder.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/increasebidsuccessfulorder.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/admin/inventoryStatistics.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/inventoryStatistics.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/admin/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/admin/outWarehousing.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/outWarehousing.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/admin/purchaseOrder.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/purchaseOrder.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/admin/purchaseOrder.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/bidsuccessfulorder.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/admin/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/register.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/admin/returnOrder.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/returnOrder.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/admin/returnSales.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/returnSales.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/admin/role-add.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/role-add.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/admin/salesOrder.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/salesOrder.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/admin/salesStatistics.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/salesStatistics.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/admin/section.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/section.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/admin/seeWarehouse.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/seeWarehouse.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/admin/supplier.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/supplier.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/admin/warehouseName.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/warehouseName.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirement.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/admin/workPlatform.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/workPlatform.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jxc.sql" beforeDir="false" afterPath="$PROJECT_DIR$/jxc.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,8 +152,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="SQL File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -404,7 +404,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Python.apps.executor": "Run",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Python.apps.executor": "Debug",
     "Python.asd.executor": "Run",
     "Python.download_layui.executor": "Run",
     "Python.manage.executor": "Run",
@@ -418,6 +419,7 @@
     "nodejs_package_manager_path": "npm",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "vue.rearranger.settings.migration": "true",
+    "数据库脚本.20250415.sql.executor": "Run",
     "数据库脚本.jxc.sql.executor": "Run"
   },
   "keyToStringList": {
@@ -426,7 +428,8 @@
     ],
     "RunConfigurationTargetLRU": [
       "aea92b3c-b5fe-4a94-b056-621a2f396b63",
-      "b816972b-03cb-4375-8626-d2c7a2c86d13"
+      "b816972b-03cb-4375-8626-d2c7a2c86d13",
+      "b816972b-03cb-4375-8626-d2c7a2c86d13/schema/\"bishe\""
     ]
   }
 }]]></component>
@@ -441,10 +444,10 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.manage">
-    <configuration name="jxc.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
-      <script-file value="$PROJECT_DIR$/jxc.sql" />
+    <configuration name="20250415.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
+      <script-file value="$PROJECT_DIR$/20250415.sql" />
       <script-mode>FILE</script-mode>
-      <data-source id="b816972b-03cb-4375-8626-d2c7a2c86d13" />
+      <data-source id="b816972b-03cb-4375-8626-d2c7a2c86d13" namespace="schema/&quot;bishe&quot;" />
       <method v="2" />
     </configuration>
     <configuration name="apps" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -565,10 +568,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.manage" />
-        <item itemvalue="Python.asd" />
         <item itemvalue="Python.apps" />
+        <item itemvalue="数据库脚本.20250415.sql" />
+        <item itemvalue="Python.asd" />
         <item itemvalue="Python.download_layui" />
-        <item itemvalue="数据库脚本.jxc.sql" />
       </list>
     </recent_temporary>
   </component>
@@ -600,7 +603,8 @@
       <workItem from="1553777189053" duration="40000" />
       <workItem from="1553777389533" duration="5851000" />
       <workItem from="1742801582714" duration="24153000" />
-      <workItem from="1744593061543" duration="23612000" />
+      <workItem from="1744593061543" duration="50764000" />
+      <workItem from="1744768314917" duration="35023000" />
     </task>
     <task id="LOCAL-00001" summary="适配性修改">
       <option name="closed" value="true" />
@@ -610,7 +614,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742982747852</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="修改标题">
+      <option name="closed" value="true" />
+      <created>1744625134471</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1744625134471</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -693,13 +705,14 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="适配性修改" />
-    <option name="LAST_COMMIT_MESSAGE" value="适配性修改" />
+    <MESSAGE value="修改标题" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改标题" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/flask_Purchase_and_sale$asd.coverage" NAME="asd 覆盖结果" MODIFIED="1744601115479" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/flask_Purchase_and_sale$apps.coverage" NAME="apps 覆盖结果" MODIFIED="1744595063107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" />
+    <SUITE FILE_PATH="coverage/flask_Purchase_and_sale$apps.coverage" NAME="apps 覆盖结果" MODIFIED="1744768651344" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" />
     <SUITE FILE_PATH="coverage/flask_Purchase_and_sale$download_layui.coverage" NAME="download_layui 覆盖结果" MODIFIED="1744593427817" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/flask_Purchase_and_sale$manage.coverage" NAME="manage 覆盖结果" MODIFIED="1744610457826" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/flask_Purchase_and_sale$manage.coverage" NAME="manage 覆盖结果" MODIFIED="1744943030688" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/templates/admin/addSection.html">
