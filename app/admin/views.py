@@ -145,63 +145,54 @@ def logout():
 
 
 
-# # 采购模块
-# # 供应商
-# @admin.route("/supplier/<int:page>",methods=["GET","POST"])
-# @admin_login_req
-# def suppliers(page=None):
-#     form=suppliersserach()
-#     if page is None:
-#         page = 1
-#     if form.data['name'] is None or form.data['name']=='':
-#         page_data = supplier.query.order_by(
-#             supplier.supplier_id.desc()
-#         ).paginate(page=page, per_page=10)
-#         return render_template("admin/supplier.html", form=form, page_data=page_data)
-#     if form.data['name'].strip():
-#         page_data = supplier.query.order_by(
-#             supplier.supplier_id.desc()
-#         ).filter(supplier.supplier_name==form.data['name']).paginate(page=page, per_page=10)
-#         return render_template("admin/supplier.html", form=form, page_data=page_data)
-#
-# # 删除供应商
-# @admin.route("/dellsupplier/",methods=["GET"])
-# @admin_login_req
-# def dellsupplier():
-#     ids=request.args.get('id')
-#     names = supplier.query.filter_by(supplier_id=ids).first()
-#     try:
-#         db.session.delete(names)
-#         db.session.commit()
-#     except:
-#         db.session.rollback()
-#         db.session.flush()
-#     return "success"
-#
-#
-# # 添加供应商
-# @admin.route("/addSupplier/",methods=["GET","POST"])
-# @admin_login_req
-# def addSupplier():
-#     form=addsuppliers()
-#     if form.validate_on_submit():
-#         data = form.data
-#         names = supplier.query.filter_by(supplier_name=data['name']).count()
-#         if names == 1:
-#             flash("添加失败，已有此供应商")
-#             return redirect(url_for("admin.addTradeName"))
-#         names = supplier(
-#             supplier_name=data['name'],
-#             supplier_addre=data['addre'],
-#             supplier_credit=data['credit'],
-#         )
-#         db.session.add(names)
-#         db.session.commit()
-#         time.sleep(2)
-#     return render_template("admin/addSupplier.html",form=form)
-#
-#
-# 招标成功单管理模块
+# 招标单位管理
+# 查找招标单位
+@admin.route("/tenderlist/<int:page>",methods=["GET","POST"])
+@admin_login_req
+def tenderlist(page=None):
+    form=tenderlist()
+    if page is None:
+        page = 1
+    if form.data['username'] is None or form.data['username']=='':
+        page_data = User.query.order_by(
+            User.id.desc()
+        ).paginate(page=page, per_page=10)
+        return render_template("admin/tenderlist.html", form=form, page_data=page_data)
+    if form.data['username'].strip():
+        page_data = User.query.order_by(
+            User.id.desc()
+        ).filter(User.username==form.data['username']).paginate(page=page, per_page=10)
+        return render_template("admin/tenderlist.html", form=form, page_data=page_data)
+
+# 删除招标单位
+@admin.route("/delltender/",methods=["GET"])
+@admin_login_req
+def delltender():
+    ids=request.args.get('id')
+    user = Project.query.filter_by(id=ids).first()
+    response = {
+        'success': False,
+        'message': ''
+    }
+    try:
+        if user:
+            # 执行软删除（标记删除）
+            user.is_deleted = 1
+            db.session.commit()
+            response['success'] = True
+            response['message'] = '项目已标记删除'
+        else:
+            response['message'] = '项目不存在'
+    except Exception as e:
+        db.session.rollback()
+        response['message'] = f'删除失败: {str(e)}'
+    finally:
+        db.session.close()
+
+    return jsonify(response)
+
+
+#招标成功单管理模块
 @admin.route("/bidsuccessfulorder/<int:page>",methods=["GET","POST"])
 @admin_login_req
 def bidsuccessfulorder(page=None):
