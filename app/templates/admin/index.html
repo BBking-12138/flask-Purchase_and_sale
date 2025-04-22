@@ -73,11 +73,70 @@
                         <a _href="{{url_for('admin.tenderlist',page=1)}}">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>招标单位管理</cite>
-
                         </a>
                     </li>
                 </ul>
             </li>
+
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe723;</i>
+                    <cite>投标管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="{{url_for('admin.bidsuccessful',page=1)}}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>投标成功单管理</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="{{url_for('admin.bidreturn',page=1)}}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>投标退标单管理</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="{{url_for('admin.bidlist',page=1)}}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>投标单位管理</cite>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe70b;</i>
+                    <cite>评标管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="{{url_for('admin.bidevaluation',page=1)}}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>已评标管理</cite>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="{{url_for('admin.bidnotevaluation',page=1)}}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>未评标管理</cite>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="{{url_for('admin.evaluationlist',page=1)}}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>评标员管理</cite>
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
             <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe723;</i>
@@ -86,7 +145,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="{{url_for('admin.purchasingStatistics')}}">
+                        <a _href="{{url_for('admin.aiassistant')}}">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>AI助手</cite>
                         </a>

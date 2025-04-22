@@ -435,6 +435,138 @@ class TenderRevise(FlaskForm):
             "onclick": "mesg()"
         }
     )
+
+
+class ReviseNotice(FlaskForm):
+    id = StringField(
+        label="公告id",
+        validators=[
+            DataRequired("请输入公告id！")
+        ],
+        description="公告id",
+        render_kw={
+            "type": "text",
+            "placeholder": "公告id",
+            "autocomplete": "off",
+            "lay-verify": "required",
+            "class": "layui-input"
+        }
+    )
+    notice_title = StringField(
+        label='公告标题',
+        validators=[
+            DataRequired("请修改公告标题！")
+        ],
+        description="公告标题",
+        render_kw={
+            "type": "text",
+            "placeholder": "公告标题",
+            "autocomplete": "off",
+            "lay-verify": "required",
+            "class": "layui-input"
+        }
+    )
+    notice_content = StringField(
+        label='公告内容',
+        validators=[
+            DataRequired("请修改公告内容！")
+        ],
+        description="公告内容",
+        render_kw={
+            "type": "text",
+            "placeholder": "公告内容",
+            "autocomplete": "off",
+            "lay-verify": "required",
+            "class": "layui-input"
+        }
+    )
+    submit = SubmitField(
+        "修改",
+        render_kw={
+            "class": "layui-btn",
+            "lay-filter": "subm",
+            "onclick": "mesg()"
+        }
+    )
+
+
+class IncreaseNotice(FlaskForm):
+    notice_title = StringField(
+        label="公告标题",
+        validators=[
+            DataRequired("请输入公告标题！")
+        ],
+        description="公告标题",
+        render_kw={
+            "type": "text",
+            "placeholder": "公告标题",
+            "autocomplete": "off",
+            "lay-verify": "required",
+            "class": "layui-input"
+        }
+    )
+    notice_content = StringField(
+        label='公告内容',
+        validators=[
+            DataRequired("请输入公告内容！")
+        ],
+        description="公告内容",
+        render_kw={
+            "type": "text",
+            "placeholder": "公告内容",
+            "autocomplete": "off",
+            "lay-verify": "required",
+            "class": "layui-input"
+        }
+    )
+    submit = SubmitField(
+        "添加",
+        render_kw={
+            "class": "layui-btn",
+            "lay-filter": "subm",
+            "onclick": "mesg()"
+        }
+    )
+
+# 投标成功单搜索
+class BidSuccessful(FlaskForm):
+    tender_unit = StringField(
+        description="请输入投标单位名称",
+        render_kw={
+            "type": "text",
+            "class": "layui-input",
+            "placeholder": "请输入投标单位名称！",
+            "lay-verify": "required",
+        }
+    )
+    submit = SubmitField(
+        "搜索",
+        render_kw={
+            "class": "layui-btn",
+            "lay-filter": "subm",
+            "onclick": "mesg()"
+        }
+    )
+
+# 投标单位搜索
+class BidList(FlaskForm):
+    username = StringField(
+        description="请输入投标名称",
+        render_kw={
+            "type": "text",
+            "class": "layui-input",
+            "placeholder": "请输入投标名称！",
+            "lay-verify": "required",
+        }
+    )
+    submit = SubmitField(
+        "搜索",
+        render_kw={
+            "class": "layui-btn",
+            "lay-filter": "subm",
+            "onclick": "mesg()"
+        }
+    )
 # # 招标成功单搜索
 # class purchsearch(FlaskForm):
 #     goods_name = StringField(

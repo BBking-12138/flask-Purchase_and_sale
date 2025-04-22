@@ -20,7 +20,8 @@ from flask import render_template, make_response, session, redirect, url_for, re
 #     addcustomes, warehouseserch, enteringwarehouseserach, outWarehousingsearch, \
 #     addsection, adddutys, powerss, addsaleorder, bumens, alertpasswd, wjpasswd, beifenser
 from app.admin.forms import LoginForm, RegisterForm, alertpasswd, wjpasswd, BidSuccessfulSearch, \
-    IncreaseBidSuccessfulOrder, TenderRevise, TenderList, NoticeList
+    IncreaseBidSuccessfulOrder, TenderRevise, TenderList, NoticeList, ReviseNotice, IncreaseNotice, BidSuccessful, \
+    BidList
 # from app.admin.uilt import get_verify_code, bars, lines, pies, on_created
 # from app.models import User, Purchase, goods, supplier, client, section, duty, inwarehouse, stock, sealreturngoods, \
 #     warehouse, returngoods, sales, power
@@ -288,7 +289,6 @@ def tenderrevise():
         time.sleep(2)
     return render_template("admin/tenderRevise.html",form=form)
 
-
 #招标项目管理模块
 @admin.route("/bidtender/<int:page>",methods=["GET","POST"])
 @admin_login_req
@@ -318,6 +318,46 @@ def bidreturntender(page=None):
     if form.data['tender_unit'] is None or form.data['tender_unit']=='':
         page_data = Project.query.order_by(
             Project.id.desc()
+        ).filter(Project.is_deleted == 0, Project.status_id == 7).paginate(page=page, per_page=10)
+        return render_template("admin/bidsuccessfulorder.html", form=form, page_data=page_data)
+    if form.data['tender_unit'].strip():
+        page_data = Project.query.order_by(
+            Project.id.desc()
+        ).filter(Project.tender_unit.ilike(f"%{form.data['tender_unit']}%")).paginate(page=page, per_page=10)
+        # print("tender_unit:", form.data['tender_unit'])
+        return render_template("admin/bidsuccessfulorder.html", form=form, page_data=page_data)
+
+
+# 投标单位管理
+# 投标成功单管理模块
+@admin.route("/bidsuccessful/<int:page>",methods=["GET","POST"])
+@admin_login_req
+def bidsuccessful(page=None):
+    form=BidSuccessful()
+    if page is None:
+        page = 1
+    if form.data['tender_unit'] is None or form.data['tender_unit']=='':
+        page_data = Project.query.order_by(
+            Project.id.desc()
+        ).filter(Project.bid_unit.isnot(None), Project.is_deleted == 0).paginate(page=page, per_page=10)
+        return render_template("admin/bidsuccessfulorder.html", form=form, page_data=page_data)
+    if form.data['tender_unit'].strip():
+        page_data = Project.query.order_by(
+            Project.id.desc()
+        ).filter(Project.tender_unit.ilike(f"%{form.data['tender_unit']}%")).paginate(page=page, per_page=10)
+        # print("tender_unit:", form.data['tender_unit'])
+        return render_template("admin/bidsuccessfulorder.html", form=form, page_data=page_data)
+
+#投标退标项目管理模块
+@admin.route("/bidreturn/<int:page>",methods=["GET","POST"])
+@admin_login_req
+def bidreturn(page=None):
+    form=BidSuccessful()
+    if page is None:
+        page = 1
+    if form.data['tender_unit'] is None or form.data['tender_unit']=='':
+        page_data = Project.query.order_by(
+            Project.id.desc()
         ).filter(Project.is_deleted == 0, Project.status_id == 9).paginate(page=page, per_page=10)
         return render_template("admin/bidsuccessfulorder.html", form=form, page_data=page_data)
     if form.data['tender_unit'].strip():
@@ -326,6 +366,110 @@ def bidreturntender(page=None):
         ).filter(Project.tender_unit.ilike(f"%{form.data['tender_unit']}%")).paginate(page=page, per_page=10)
         # print("tender_unit:", form.data['tender_unit'])
         return render_template("admin/bidsuccessfulorder.html", form=form, page_data=page_data)
+
+# 查找投标单位
+@admin.route("/bidlist/<int:page>",methods=["GET","POST"])
+@admin_login_req
+def bidlist(page=None):
+    form = BidList()
+    # 确保page默认值为1
+    if page is None:
+        page = 1
+    # 先验证表单提交再访问数据
+    if form.validate_on_submit():
+        # 如果搜索框有内容
+        if form.username.data.strip():
+            page_data = User.query.order_by(
+                User.id.desc()
+            ).filter(
+                User.username.ilike(f"%{form.data['username']}%"),
+                User.is_deleted == 0,
+                User.identity == '投标单位'
+            ).paginate(page=page, per_page=10)
+            return render_template("admin/tenderlist.html", form=form, page_data=page_data)
+    # 默认查询（无用户名筛选）
+    page_data = User.query.order_by(
+        User.id.desc()
+    ).filter_by(
+        is_deleted=0,
+        identity='投标单位'
+    ).paginate(page=page, per_page=10)
+    return render_template("admin/tenderlist.html", form=form, page_data=page_data)
+
+# 评标员管理
+# 评标成功单管理模块
+@admin.route("/bidevaluation/<int:page>",methods=["GET","POST"])
+@admin_login_req
+def bidevaluation(page=None):
+    form=BidSuccessful()
+    if page is None:
+        page = 1
+    if form.data['tender_unit'] is None or form.data['tender_unit']=='':
+        page_data = Project.query.order_by(
+            Project.id.desc()
+        ).filter(Project.bid_unit.isnot(None), Project.is_deleted == 0).paginate(page=page, per_page=10)
+        return render_template("admin/bidsuccessfulorder.html", form=form, page_data=page_data)
+    if form.data['tender_unit'].strip():
+        page_data = Project.query.order_by(
+            Project.id.desc()
+        ).filter(Project.tender_unit.ilike(f"%{form.data['tender_unit']}%")).paginate(page=page, per_page=10)
+        # print("tender_unit:", form.data['tender_unit'])
+        return render_template("admin/bidsuccessfulorder.html", form=form, page_data=page_data)
+
+#未评标管理模块
+@admin.route("/bidnotevaluation/<int:page>",methods=["GET","POST"])
+@admin_login_req
+def bidnotevaluation(page=None):
+    form=BidSuccessful()
+    if page is None:
+        page = 1
+    if form.data['tender_unit'] is None or form.data['tender_unit']=='':
+        page_data = Project.query.order_by(
+            Project.id.desc()
+        ).filter(Project.is_deleted == 0, Project.status_id == 4).paginate(page=page, per_page=10)
+        return render_template("admin/bidsuccessfulorder.html", form=form, page_data=page_data)
+    if form.data['tender_unit'].strip():
+        page_data = Project.query.order_by(
+            Project.id.desc()
+        ).filter(Project.tender_unit.ilike(f"%{form.data['tender_unit']}%")).paginate(page=page, per_page=10)
+        # print("tender_unit:", form.data['tender_unit'])
+        return render_template("admin/bidsuccessfulorder.html", form=form, page_data=page_data)
+
+# 评标员管理
+@admin.route("/evaluationlist/<int:page>",methods=["GET","POST"])
+@admin_login_req
+def evaluationlist(page=None):
+    form = BidList()
+    # 确保page默认值为1
+    if page is None:
+        page = 1
+    # 先验证表单提交再访问数据
+    if form.validate_on_submit():
+        # 如果搜索框有内容
+        if form.username.data.strip():
+            page_data = User.query.order_by(
+                User.id.desc()
+            ).filter(
+                User.username.ilike(f"%{form.data['username']}%"),
+                User.is_deleted == 0,
+                User.identity == '投标单位'
+            ).paginate(page=page, per_page=10)
+            return render_template("admin/tenderlist.html", form=form, page_data=page_data)
+    # 默认查询（无用户名筛选）
+    page_data = User.query.order_by(
+        User.id.desc()
+    ).filter_by(
+        is_deleted=0,
+        identity='投标单位'
+    ).paginate(page=page, per_page=10)
+    return render_template("admin/tenderlist.html", form=form, page_data=page_data)
+
+# AI助手
+@admin.route("/aiassistant/")
+@admin_login_req
+def aiassistant():
+    return render_template()
+
 # 采购订单
 # @admin.route("/purchaseOrder/<int:page>", methods=["GET", "POST"])
 # @admin_login_req
@@ -1067,6 +1211,41 @@ def dellnotice():
         db.session.close()
 
     return jsonify(response)  # 返回JSON格式响应
+
+# 添加公告信息
+@admin.route("/increasenotice/",methods=["GET","POST"])
+@admin_login_req
+def increasenotice():
+    form=IncreaseNotice()
+    if form.validate_on_submit():
+        data = form.data
+        notice = Notice(
+            notice_title=data['notice_title'],
+            notice_content=data['notice_content']
+        )
+        db.session.add(notice)
+        db.session.commit()
+        time.sleep(2)
+
+    return render_template("admin/increasenotice.html",form=form)
+
+# 修改公告信息
+@admin.route("/revisenotice/",methods=["GET","POST"])
+@admin_login_req
+def revisenotice():
+    form = ReviseNotice()
+    if not form.id.data:
+        print('请输入公告id')
+    notice = Notice.query.get(form.id.data)
+    if not notice:
+        print('项目不存在')
+    if form.validate_on_submit():
+        form.populate_obj(notice)
+        db.session.commit()
+        time.sleep(2)
+    return render_template("admin/revisenotice.html",form=form)
+
+
 #
 # # 员工状态
 # @admin.route("/admin/admin_pass/",methods=["GET"])
@@ -1176,18 +1355,18 @@ def dellnotice():
 #     return render_template("admin/bumen.html",form=form)
 #
 #
-# 备份
-# @admin.route("/beifen/",methods=['GET','POST'])
-# @admin_login_req
-# @admin_power
-# def beifen():
-#     key = "传入数据库密码"
-#     name = on_created()
-#     path = "app/backup/"+name
-#     form = beifenser()
-#
-#     if form.validate_on_submit():
-#         os.system("mysqldump -uroot -p{0} sm2.0 > {1}.dump" .format(key,path))
-#         os.system("mysqldump  -uroot -p{0} --host=localhost --all-databases> {1}.txt" .format (key,path))
-#         flash("备份完成")
-#     return render_template("admin/beifen.html",form=form)
+#备份
+@admin.route("/beifen/",methods=['GET','POST'])
+@admin_login_req
+@admin_power
+def beifen():
+    key = "传入数据库密码"
+    name = on_created()
+    path = "app/backup/"+name
+    form = beifenser()
+
+    if form.validate_on_submit():
+        os.system("mysqldump -uroot -p{0} sm2.0 > {1}.dump" .format(key,path))
+        os.system("mysqldump  -uroot -p{0} --host=localhost --all-databases> {1}.txt" .format (key,path))
+        flash("备份完成")
+    return render_template("admin/beifen.html",form=form)
