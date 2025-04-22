@@ -81,6 +81,19 @@ VALUES
     (1,101, '办公用品招标', '笔记本电脑', '弄收缩啊擦受刺激哦','北京市政建设集团', 0, NULL, 0,(SELECT id FROM status WHERE code = 'TENDERING'), 0,'2024-01-15 09:30:00', '2024-01-15 09:30:00'),
     (2,202, '三农i啊女u', '苹果笔记本电脑', 'V在vvv在','上海医疗集团', 1, '腾讯医疗事业部', 1,(SELECT id FROM status WHERE code = 'BIDDING'), 0,'2024-01-15 09:30:00', '2024-01-15 09:30:00');
 
+CREATE TABLE `notice` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `notice_title` varchar(255) DEFAULT NULL COMMENT '公告标题',
+  `notice_content` varchar(500) DEFAULT NULL COMMENT '公告内容',
+  `notice_desc` varchar(255) DEFAULT NULL COMMENT '备注',
+  `is_pin` tinyint(1) DEFAULT NULL COMMENT '是否置顶 0:未置顶；1:已置顶',
+  `is_deleted` tinyint(1) DEFAULT '0' COMMENT '是否已删除,0:未删除;1:已删除',
+  `create_by` int DEFAULT NULL COMMENT '创建人',
+  `update_by` int DEFAULT NULL COMMENT '修改人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3 COMMENT='通知公告表';
 
 # CREATE TABLE `status` (
 #   `id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,

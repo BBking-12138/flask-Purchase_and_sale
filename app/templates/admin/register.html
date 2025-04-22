@@ -77,12 +77,12 @@
                {{form.username}}
             </div>
         </div>
-        <div class="layui-input-inline">
-            <!-- 性别 -->
-            <div class="layui-inline" style="width: 85%">
-               {{form.sex}}
-            </div>
-        </div>
+<!--        <div class="layui-input-inline">-->
+<!--            &lt;!&ndash; 性别 &ndash;&gt;-->
+<!--            <div class="layui-inline" style="width: 85%">-->
+<!--               {{form.sex}}-->
+<!--            </div>-->
+<!--        </div>-->
 
                     <div class="layui-input-inline">
             <!-- 电话 -->
@@ -96,6 +96,12 @@
             <!-- 邮箱 -->
             <div class="layui-inline" style="width: 85%">
                {{form.email}}
+            </div>
+        </div>
+                    <div class="layui-input-inline">
+            <!-- 用户身份 -->
+            <div class="layui-inline" style="width: 85%">
+               {{form.identity}}
             </div>
         </div>
 
@@ -116,7 +122,6 @@
          <hr style="width: 85%" />
         <p style="width: 85%"><a href="{{url_for('admin.login')}}" class="fl">已有账号？立即登录</a><a href="javascript:;" class="fr">忘记密码？</a></p>
 </div>
-
 
 
 </body>

@@ -260,6 +260,35 @@ class ProjectEvaluator(db.Model):
     evaluation_notes = db.Column(db.Text, comment='评标意见')
     evaluation_time = db.Column(db.DateTime, comment='评标时间')
 
+
+class Notice(db.Model):
+    """
+    公告栏表
+    """
+    __tablename__ = 'notice'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, doc='主键ID')
+    notice_title = db.Column(db.String(255), nullable=True, doc='公告标题')
+    notice_content = db.Column(db.String(500), nullable=True, doc='公告内容')
+    notice_desc = db.Column(db.String(255), nullable=True, doc='备注')
+    is_pin = db.Column(db.Boolean, default=False, doc='是否置顶')
+    is_deleted = db.Column(db.Boolean, default=False, doc='是否删除')
+    create_by = db.Column(db.Integer, nullable=True, doc='创建人')
+    update_by = db.Column(db.Integer, nullable=True, doc='修改人')
+    create_time = db.Column(db.DateTime, default=datetime.now, doc='创建时间')
+    update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now, doc='更新时间')
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "notice_title": self.notice_title,
+            "notice_content": self.notice_content,
+            "notice_desc": self.notice_desc,
+            "is_pin": self.is_pin,
+            "is_deleted": self.is_deleted,
+            "create_by": self.create_by,
+            "create_time": self.create_time.strftime("%Y-%m-%d %H:%M:%S")
+        }
 # class warehouse(db.Model):
 #     __tablename__ = 'warehouse'
 #

@@ -7,15 +7,15 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so" method="post">
-           {{form.name}}
+           {{form.username}}
 
             {{form.csrf_token}}
           {{form.submit}}
         </form>
       </div>
-      <xblock>
-        <button class="layui-btn" onclick="x_admin_show('搜索招标单位','{{url_for("admin.tenderlist")}}','600','450')">搜索招标单位</button>
-      </xblock>
+<!--      <xblock>-->
+<!--        <button class="layui-btn" onclick="x_admin_show('搜索招标单位','{{ url_for("admin.tenderlist", page=1) }}',600,450)">搜索招标单位</button>-->
+<!--      </xblock>-->
       <table class="layui-table">
         <thead>
           <tr>

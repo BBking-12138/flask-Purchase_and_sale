@@ -20,11 +20,11 @@ from flask import render_template, make_response, session, redirect, url_for, re
 #     addcustomes, warehouseserch, enteringwarehouseserach, outWarehousingsearch, \
 #     addsection, adddutys, powerss, addsaleorder, bumens, alertpasswd, wjpasswd, beifenser
 from app.admin.forms import LoginForm, RegisterForm, alertpasswd, wjpasswd, BidSuccessfulSearch, \
-    IncreaseBidSuccessfulOrder, TenderRevise
+    IncreaseBidSuccessfulOrder, TenderRevise, TenderList, NoticeList
 # from app.admin.uilt import get_verify_code, bars, lines, pies, on_created
 # from app.models import User, Purchase, goods, supplier, client, section, duty, inwarehouse, stock, sealreturngoods, \
 #     warehouse, returngoods, sales, power
-from app.models import User, Project
+from app.models import User, Project, Notice
 from app.admin.uilt import get_verify_code
 
 def admin_login_req(f):
@@ -98,14 +98,16 @@ def register():
         if names == 1:
             flash('注册失败')
             return redirect(url_for("admin.register"))
-        ses=['','男','女']
+        # ses=['','男','女']
+        identitys=['招标单位','投标单位','评标员']
         names = User(
             count=data['count'],
             password=generate_password_hash((data['password'])),
             username=data['username'],
-            sex=ses[data['sex']],
+            sex='男',
             mobile=data['mobile'],
-            email=data['email']
+            email=data['email'],
+            identity=identitys[data['identity']],
         )
 
         db.session.add(names)
@@ -150,19 +152,30 @@ def logout():
 @admin.route("/tenderlist/<int:page>",methods=["GET","POST"])
 @admin_login_req
 def tenderlist(page=None):
-    form=tenderlist()
+    form = TenderList()
+    # 确保page默认值为1
     if page is None:
         page = 1
-    if form.data['username'] is None or form.data['username']=='':
-        page_data = User.query.order_by(
-            User.id.desc()
-        ).paginate(page=page, per_page=10)
-        return render_template("admin/tenderlist.html", form=form, page_data=page_data)
-    if form.data['username'].strip():
-        page_data = User.query.order_by(
-            User.id.desc()
-        ).filter(User.username==form.data['username']).paginate(page=page, per_page=10)
-        return render_template("admin/tenderlist.html", form=form, page_data=page_data)
+    # 先验证表单提交再访问数据
+    if form.validate_on_submit():
+        # 如果搜索框有内容
+        if form.username.data.strip():
+            page_data = User.query.order_by(
+                User.id.desc()
+            ).filter(
+                User.username.ilike(f"%{form.data['username']}%"),
+                User.is_deleted == 0,
+                User.identity == '招标单位'
+            ).paginate(page=page, per_page=10)
+            return render_template("admin/tenderlist.html", form=form, page_data=page_data)
+    # 默认查询（无用户名筛选）
+    page_data = User.query.order_by(
+        User.id.desc()
+    ).filter_by(
+        is_deleted=0,
+        identity='招标单位'
+    ).paginate(page=page, per_page=10)
+    return render_template("admin/tenderlist.html", form=form, page_data=page_data)
 
 # 删除招标单位
 @admin.route("/delltender/",methods=["GET"])
@@ -202,7 +215,7 @@ def bidsuccessfulorder(page=None):
     if form.data['tender_unit'] is None or form.data['tender_unit']=='':
         page_data = Project.query.order_by(
             Project.id.desc()
-        ).filter_by(is_deleted=0).paginate(page=page, per_page=10)
+        ).filter(Project.bid_unit.isnot(None), Project.is_deleted == 0).paginate(page=page, per_page=10)
         return render_template("admin/bidsuccessfulorder.html", form=form, page_data=page_data)
     if form.data['tender_unit'].strip():
         page_data = Project.query.order_by(
@@ -274,6 +287,45 @@ def tenderrevise():
         db.session.commit()
         time.sleep(2)
     return render_template("admin/tenderRevise.html",form=form)
+
+
+#招标项目管理模块
+@admin.route("/bidtender/<int:page>",methods=["GET","POST"])
+@admin_login_req
+def bidtender(page=None):
+    form=BidSuccessfulSearch()
+    if page is None:
+        page = 1
+    if form.data['tender_unit'] is None or form.data['tender_unit']=='':
+        page_data = Project.query.order_by(
+            Project.id.desc()
+        ).filter_by(is_deleted=0).paginate(page=page, per_page=10)
+        return render_template("admin/bidsuccessfulorder.html", form=form, page_data=page_data)
+    if form.data['tender_unit'].strip():
+        page_data = Project.query.order_by(
+            Project.id.desc()
+        ).filter(Project.tender_unit.ilike(f"%{form.data['tender_unit']}%")).paginate(page=page, per_page=10)
+        # print("tender_unit:", form.data['tender_unit'])
+        return render_template("admin/bidsuccessfulorder.html", form=form, page_data=page_data)
+
+#招标退标项目管理模块
+@admin.route("/bidreturntender/<int:page>",methods=["GET","POST"])
+@admin_login_req
+def bidreturntender(page=None):
+    form=BidSuccessfulSearch()
+    if page is None:
+        page = 1
+    if form.data['tender_unit'] is None or form.data['tender_unit']=='':
+        page_data = Project.query.order_by(
+            Project.id.desc()
+        ).filter(Project.is_deleted == 0, Project.status_id == 9).paginate(page=page, per_page=10)
+        return render_template("admin/bidsuccessfulorder.html", form=form, page_data=page_data)
+    if form.data['tender_unit'].strip():
+        page_data = Project.query.order_by(
+            Project.id.desc()
+        ).filter(Project.tender_unit.ilike(f"%{form.data['tender_unit']}%")).paginate(page=page, per_page=10)
+        # print("tender_unit:", form.data['tender_unit'])
+        return render_template("admin/bidsuccessfulorder.html", form=form, page_data=page_data)
 # 采购订单
 # @admin.route("/purchaseOrder/<int:page>", methods=["GET", "POST"])
 # @admin_login_req
@@ -944,8 +996,8 @@ def wjmm():
         mails=[]
         mails.append(form.data['email'])
         try:
-            msg = Message('修改密码通知', sender='gchase@163.com', recipients=mails)
-            msg.html = '<span>尊敬的</span>'+usermessage.user_name+'，您好：<br>您在we商贸中申请找回密码<br><b style="background-color: #FF0000">重设密码已完成,若非本人操作</b><br>请及时联系管理员修改<b>ganiner@163.com</b>'
+            msg = Message('修改密码通知', sender='wangjunjie88888@gmail.com', recipients=mails)
+            msg.html = '<span>尊敬的</span>'+usermessage.user_name+'，您好：<br>您在智能招标中申请找回密码<br><b style="background-color: #FF0000">重设密码已完成,若非本人操作</b><br>请及时联系管理员修改<b>wangjunjie88888@gmail.com</b>'
             mail.send(msg)
             flash("修改成功")
             db.session.commit()
@@ -954,23 +1006,67 @@ def wjmm():
             db.session.flush()
         return redirect(url_for('admin.login'))
     return render_template("admin/wjmm.html", form=form)
-#
-#
-#
-# # 管理模块
-# # 员工管理
-# @admin.route("/admin_list/<int:page>",methods=["GET","POST"])
-# @admin_login_req
-# @admin_power
-# def admin_list(page=None):
-#     if page is None:
-#         page = 1
-#     page_data = User.query.order_by(
-#         User.user_id.desc()
-#     ).paginate(page=page, per_page=4)
-#
-#
-#     return render_template("admin/admin_list.html",page_data=page_data)
+
+# 管理模块
+# 账号管理
+@admin.route("/admin_list/<int:page>",methods=["GET","POST"])
+@admin_login_req
+@admin_power
+def admin_list(page=None):
+    if page is None:
+        page = 1
+    page_data = User.query.order_by(
+        User.id.desc()
+    ).paginate(page=page, per_page=4)
+
+    return render_template("admin/admin_list.html",page_data=page_data)
+
+# 公告管理
+@admin.route("/noticelist/<int:page>",methods=["GET","POST"])
+@admin_login_req
+@admin_power
+def noticelist(page=None):
+    form = NoticeList()
+    if page is None:
+        page = 1
+    if form.data['notice_title'] is None or form.data['notice_title'] == '':
+        page_data = Notice.query.order_by(
+            Notice.id.desc()
+        ).filter( Notice.is_deleted == 0).paginate(page=page, per_page=10)
+        return render_template("admin/noticelist.html", form=form, page_data=page_data)
+    if form.data['notice_title'].strip():
+        page_data = Notice.query.order_by(
+            Notice.id.desc()
+        ).filter(Notice.notice_title.ilike(f"%{form.data['notice_title']}%")).paginate(page=page, per_page=10)
+        # print("tender_unit:", form.data['tender_unit'])
+        return render_template("admin/noticelist.html", form=form, page_data=page_data)
+
+# 删除公告
+@admin.route("/dellnotice/",methods=['GET'])
+@admin_login_req
+def dellnotice():
+    id=request.args.get('id')
+    notice = Notice.query.filter_by(id=id).first()
+    response = {
+        'success': False,
+        'message': ''
+    }
+    try:
+        if notice:
+            # 执行软删除（标记删除）
+            notice.is_deleted = 1
+            db.session.commit()
+            response['success'] = True
+            response['message'] = '公告已标记删除'
+        else:
+            response['message'] = '公告不存在'
+    except Exception as e:
+        db.session.rollback()
+        response['message'] = f'删除失败: {str(e)}'
+    finally:
+        db.session.close()
+
+    return jsonify(response)  # 返回JSON格式响应
 #
 # # 员工状态
 # @admin.route("/admin/admin_pass/",methods=["GET"])
@@ -997,7 +1093,7 @@ def wjmm():
 #     page_data = section.query.order_by(
 #         section.section_id.desc()
 #     ).paginate(page=page, per_page=4)
-#     return render_template("admin/section.html",page_data=page_data)
+#     return render_template("admin/noticelist.html",page_data=page_data)
 #
 # # 添加部门
 # @admin.route("/addSection/",methods=["GET","POST"])

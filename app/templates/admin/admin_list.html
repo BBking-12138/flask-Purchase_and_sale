@@ -3,46 +3,39 @@
 
 {% block content %}
 <div class="x-body">
-    <xblock>
+<!--    <xblock>-->
         <!-- 合并操作按钮组 -->
-        <div class="layui-btn-group">
-            <button class="layui-btn layui-btn-sm edit-btn" data-url="{{ url_for('admin.comminrole') }}">
-                <i class="layui-icon">&#xe642;</i> 修改权限
-            </button>
-            <button class="layui-btn layui-btn-sm layui-btn-warm" data-url="{{ url_for('admin.bumen') }}">
-                <i class="layui-icon">&#xe642;</i> 修改部门职务
-            </button>
-        </div>
-    </xblock>
+<!--        <div class="layui-btn-group">-->
+<!--            <button class="layui-btn layui-btn-sm edit-btn" data-url="{{ url_for('admin.comminrole') }}">-->
+<!--                <i class="layui-icon">&#xe642;</i> 修改权限-->
+<!--            </button>-->
+<!--            <button class="layui-btn layui-btn-sm layui-btn-warm" data-url="{{ url_for('admin.bumen') }}">-->
+<!--                <i class="layui-icon">&#xe642;</i> 修改部门职务-->
+<!--            </button>-->
+<!--        </div>-->
+<!--    </xblock>-->
 
     <table class="layui-table">
         <thead>
           <tr>
             <th>ID</th>
-            <th>登录名</th>
-            <th>姓名</th>
-            <th>性别</th>
-            <th>邮箱</th>
-            <th>手机</th>
-            <th>所属部门</th>
-            <th>职务</th>
-            <th>权限</th>
-            <th>加入时间</th>
+            <th>用户名</th>
+            <th>电话号码</th>
+            <th>电子邮箱</th>
+            <th>用户身份</th>
+            <th>创建时间</th>
+
           </tr>
         </thead>
         <tbody>
         {% for i in page_data.items %}
           <tr>
-            <td>{{ i.user_id }}</td>
-            <td>{{ i.user_count }}</td>
-            <td>{{ i.user_name }}</td>
-            <td>{{ i.user_sex }}</td>
-            <td>{{ i.user_mail }}</td>
-            <td>{{ i.user_phone }}</td>
-            <td>{{ i.user_section }}</td>
-            <td>{{ i.user_duty }}</td>
-            <td>{{ i.user_power }}</td>
-            <td>{{ i.user_addtime }}</td>
+            <td>{{ i.id }}</td>
+            <td>{{ i.username }}</td>
+            <td>{{ i.mobile }}</td>
+            <td>{{ i.email }}</td>
+            <td>{{ i.identity }}</td>
+            <td>{{ i.create_time }}</td>
           </tr>
         {% endfor %}
         </tbody>
