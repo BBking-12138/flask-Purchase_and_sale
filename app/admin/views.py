@@ -1168,7 +1168,7 @@ def admin_list(page=None):
 # 公告管理
 @admin.route("/noticelist/<int:page>",methods=["GET","POST"])
 @admin_login_req
-@admin_power
+# @admin_power
 def noticelist(page=None):
     form = NoticeList()
     if page is None:
